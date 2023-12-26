@@ -13,7 +13,8 @@ def index(request):
                 "input1":
                     [
                         {  
-                            'Sex': request.POST.get('input1Gender'),   
+                            'Sex': request.POST.get('input1Gender'),
+                            'Age': request.POST.get('input1Age'),
                             'Use_of_insulin': request.POST.get('input1Insulin'),   
                             'Random_blood_glucose': request.POST.get('input1BloodGlucose'),  
                             'CRP': request.POST.get('input1CRP'),  
@@ -62,6 +63,7 @@ def index(request):
 
 @csrf_exempt
 def predict(request):
+    print("123")
     return render(request, 'hello_azure/index.html')
     # if request.method == 'POST':
     #     data = {
