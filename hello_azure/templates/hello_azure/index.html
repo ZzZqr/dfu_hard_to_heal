@@ -86,21 +86,27 @@
             border-radius: 10px;
         }
 
-        .personalInfo::before {
-            content: "Personal Information"; /* 伪元素内容，即要添加的文本 */
-            display: block;
-            position: absolute;
-            top: -14px; /* 调整文本距离边框的上方距离 */
-            left: 10px; /* 调整文本距离边框的左侧距离 */
-            background-color: white; /* 可选，设置背景颜色以覆盖边框 */
-            padding: 0 5px; /* 可选，增加一些内边距使文本更易读 */
-            font-size: 28px; /* 设置字体大小 */
-            font-weight: bold; /* 设置字体加粗 */
+
+    </style>
+    <style>
+        /* 添加标题样式 */
+        h3 {
+            margin-bottom: 10px; /* 设置标题下方的间距 */
+            font-weight: bold;
         }
 
+        /* 控制各个div之间的间距 */
+        .row:not(:last-child) {
+            margin-bottom: 20px; /* 设置各个div之间的间距 */
+        }
 
     </style>
 
+    <style>
+        .dialog-style::before {
+            content: none;
+        }
+    </style>
 
 </head>
 <body onresize="updateResize()">
@@ -135,11 +141,8 @@
                 <fieldset style="margin-top: 30px; border:none" id="input1 Parameters">
                     <div id="divinput1 Parameters">
                         <div class="row">
-                            <div>
-                                {% comment %}input1 + Gender Insulin BloodGlucose SmokingHistory WoundArea Retinopathy
-                                    Disease Albumin CRP Creatinine
-                                {% endcomment %}
-
+                            <div class="col-lg-12">
+                                <h3>Personal Information</h3>
                                 <div class="personalInfo">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -184,7 +187,7 @@
                                             <span id="lblinput1Age" class="fieldname"
                                                   style="padding-left: 5px">Age</span>
                                             <div class="btn-group" role="group" aria-label="Age">
-                                                <input name="input1Age" type="text" value="0" id="input1Age"
+                                                <input name="input1Age" type="text" value="" id="input1Age"
                                                        Class="amount form-control form-control-number"
                                                        style="width: 80%"/>
                                             </div>
@@ -194,17 +197,22 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>Past Medical History</h3>
                                 <div class="pastMedicalHistory">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <span Class="fieldname">Current use of Insulin</span>
                                             <input type="hidden" name="input1Insulin" value="" id="input1Insulin">
                                             <div class="btn-group" role="group" aria-label="Insulin">
+                                                <button type="button" class="btn btn-secondary" id="yesInsulin">Yes
+                                                </button>
                                                 <button type="button" class="btn btn-secondary mr-2" id="noInsulin">
                                                     No
-                                                </button>
-                                                <button type="button" class="btn btn-secondary" id="yesInsulin">Yes
                                                 </button>
                                             </div>
                                             <script>
@@ -236,11 +244,12 @@
                                             <input type="hidden" name="input1Retinopathy" value=""
                                                    id="input1Retinopathy">
                                             <div class="btn-group" role="group" aria-label="Retinopathy">
+                                                <button type="button" class="btn btn-secondary" id="yesRetinopathy">Yes
+                                                </button>
                                                 <button type="button" class="btn btn-secondary mr-2" id="noRetinopathy">
                                                     No
                                                 </button>
-                                                <button type="button" class="btn btn-secondary" id="yesRetinopathy">Yes
-                                                </button>
+
                                             </div>
                                             <script>
                                                 document.getElementById("noRetinopathy").addEventListener("click", function () {
@@ -272,11 +281,12 @@
                                             <span Class="fieldname">Peripheral Arterial Disease</span>
                                             <input type="hidden" name="input1Disease" value="" id="input1Disease">
                                             <div class="btn-group" role="group" aria-label="Disease">
+                                                <button type="button" class="btn btn-secondary" id="yesDisease">Yes
+                                                </button>
                                                 <button type="button" class="btn btn-secondary mr-2" id="noDisease">
                                                     No
                                                 </button>
-                                                <button type="button" class="btn btn-secondary" id="yesDisease">Yes
-                                                </button>
+
                                             </div>
                                             <script>
                                                 document.getElementById("noDisease").addEventListener("click", function () {
@@ -307,13 +317,14 @@
                                             <input type="hidden" name="input1SmokingHistory" value=""
                                                    id="input1SmokingHistory">
                                             <div class="btn-group" role="group" aria-label="SmokingHistory">
+                                                <button type="button" class="btn btn-secondary" id="yesSmokingHistory">
+                                                    Yes
+                                                </button>
                                                 <button type="button" class="btn btn-secondary mr-2"
                                                         id="noSmokingHistory">
                                                     No
                                                 </button>
-                                                <button type="button" class="btn btn-secondary" id="yesSmokingHistory">
-                                                    Yes
-                                                </button>
+
                                             </div>
                                             <script>
                                                 document.getElementById("noSmokingHistory").addEventListener("click", function () {
@@ -341,7 +352,12 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>DFU Data</h3>
                                 <div class="dfuData">
 
                                     <div class="col-lg-6">
@@ -352,31 +368,43 @@
                                             <div class="btn-group" role="group" aria-label="BloodGlucose">
                                                 <input name="input1BloodGlucoseDummy" type="text" value=""
                                                        id="input1BloodGlucoseDummy"
-                                                       Class="amount form-control form-control-number"
+                                                       class="amount form-control form-control-number"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
+                                                <span id="infoIconGlucose" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                        {% load static %}
+                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxGlucose()" onmouseout="hideTextBoxGlucose()">
+                                                        <div id="floatingTextBoxGlucose" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line
+                                                        </div>
+                                                 </span>
                                             </div>
                                             <div id="errorTextBloodGlucose"
-                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
-                                            <!-- 错误信息显示区域 -->
+                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998;"></div>
                                             <script>
+                                                function showTextBoxGlucose() {
+                                                    document.getElementById("floatingTextBoxGlucose").style.display = "block";
+                                                }
+
+                                                function hideTextBoxGlucose() {
+                                                    document.getElementById("floatingTextBoxGlucose").style.display = "none";
+                                                }
+
                                                 document.getElementById("input1BloodGlucoseDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1BloodGlucoseDummy").value); // 获取输入框中的数值
+                                                    var inputValue = parseFloat(document.getElementById("input1BloodGlucoseDummy").value);
 
                                                     if (!isNaN(inputValue)) {
                                                         if (inputValue >= 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "0";
-                                                            document.getElementById("errorTextBloodGlucose").innerText = ""; // 清空错误信息
+                                                            document.getElementById("errorTextBloodGlucose").innerText = "";
                                                         } else if (inputValue > 0 && inputValue < 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "1";
-                                                            document.getElementById("errorTextBloodGlucose").innerText = ""; // 清空错误信息
+                                                            document.getElementById("errorTextBloodGlucose").innerText = "";
                                                         } else {
-                                                            // 其余数据为错误数据
                                                             document.getElementById("errorTextBloodGlucose").innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        // 输入值不是数字
                                                         document.getElementById("errorTextBloodGlucose").innerText = "Please enter a valid number";
                                                     }
                                                 });
@@ -386,6 +414,7 @@
                                                 });
                                             </script>
                                         </div>
+
 
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1Albumin" class="fieldname"
@@ -397,11 +426,25 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
+                                                <span id="infoIconAlbumin" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                    {% load static %}
+                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxAlbumin()" onmouseout="hideTextBoxAlbumin()">
+                                                    <div id="floatingTextBoxAlbumin" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
+                                                    </div>
+                                                </span>
                                             </div>
                                             <div id="errorTextAlbumin"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
+                                                function showTextBoxAlbumin() {
+                                                    document.getElementById("floatingTextBoxAlbumin").style.display = "block";
+                                                }
+
+                                                function hideTextBoxAlbumin() {
+                                                    document.getElementById("floatingTextBoxAlbumin").style.display = "none";
+                                                }
                                                 document.getElementById("input1AlbuminDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1AlbuminDummy").value); // 获取输入框中的数值
 
@@ -442,11 +485,25 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
+                                                <span id="infoIconCRP" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                        {% load static %}
+                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCRP()" onmouseout="hideTextBoxCRP()">
+                                                        <div id="floatingTextBoxCRP" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
+                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line
+                                                        </div>
+                                                </span>
                                             </div>
                                             <div id="errorTextCRP"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
+                                                function showTextBoxCRP() {
+                                                    document.getElementById("floatingTextBoxCRP").style.display = "block";
+                                                }
+
+                                                function hideTextBoxCRP() {
+                                                    document.getElementById("floatingTextBoxCRP").style.display = "none";
+                                                }
                                                 document.getElementById("input1CRPDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1CRPDummy").value); // 获取输入框中的数值
 
@@ -488,11 +545,25 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
+                                                <span id="infoIconWoundArea" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                    {% load static %}
+                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxWoundArea()" onmouseout="hideTextBoxWoundArea()">
+                                                    <div id="floatingTextBoxWoundArea" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line
+                                                    </div>
+                                                </span>
                                             </div>
                                             <div id="errorTextWoundArea"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
+                                                function showTextBoxWoundArea() {
+                                                    document.getElementById("floatingTextBoxWoundArea").style.display = "block";
+                                                }
+
+                                                function hideTextBoxWoundArea() {
+                                                    document.getElementById("floatingTextBoxWoundArea").style.display = "none";
+                                                }
                                                 document.getElementById("input1WoundAreaDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1WoundAreaDummy").value); // 获取输入框中的数值
 
@@ -536,11 +607,26 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Creatinine" value=""
                                                        id="input1Creatinine">
+                                                <span id="infoIconCreatinine"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                    {% load static %}
+                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCreatinine()" onmouseout="hideTextBoxCreatinine()">
+                                                    <div id="floatingTextBoxCreatinine" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line
+                                                    </div>
+                                                </span>
                                             </div>
                                             <div id="errorTextCreatinine"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
+                                                function showTextBoxCreatinine() {
+                                                    document.getElementById("floatingTextBoxCreatinine").style.display = "block";
+                                                }
+
+                                                function hideTextBoxCreatinine() {
+                                                    document.getElementById("floatingTextBoxCreatinine").style.display = "none";
+                                                }
                                                 document.getElementById("input1CreatinineDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1CreatinineDummy").value); // 获取输入框中的数值
 
@@ -578,10 +664,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
+
                     </div>
                 </fieldset>
                 {% csrf_token %}

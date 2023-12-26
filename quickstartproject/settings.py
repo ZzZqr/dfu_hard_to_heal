@@ -131,3 +131,4 @@ STATIC_URL = '/src/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = ["https://predicthardtoheal.azurewebsites.net"]
+
