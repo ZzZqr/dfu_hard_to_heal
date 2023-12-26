@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="Head1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Azure Machine Learning Web Service" />
+    <meta name="author" />
+<title>
+	Prediction of hard to heal
+</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/src/CSS/bootstrap.css" rel="stylesheet" /><link href="/src/CSS/jumbotron-narrow.css" rel="stylesheet" /><link href="/src/CSS/master.css" rel="stylesheet" />
+
+    <!-- Java script / jQuery -->
+    <script type="text/javascript" src="/src/Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/src/Scripts/bootstrap.min.js"></script>
+    
+    <!-- -->
+    <link href=/src/"CSS/jquery-ui-1.10.0.custom.min.css" rel="stylesheet" /><link href="/src/CSS/sliderIE.css" rel="stylesheet" /><link href="/src/CSS/sliderHTML.css" rel="stylesheet" />
+    <script type="text/javascript" src="/src/Scripts/sliderIE.js"></script>
+    <script src="/src/Scripts/sliderHTML.js"></script>
+    <script src="/src/Scripts/jquery-ui.js"></script>
+    <script src="/src/Scripts/master.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updateSliderIE();
+            updatesliderHTML();
+            updateResize();
+        });
+    </script>
+
+
+</head>
+<body onresize="updateResize()">
+    <div class="container azue-header">
+        <div class="jumbotron azue-header" style="background-image: url('Resources/azure-ml.png'); height: 126px; position: relative; padding-top: 10px;">
+            <a href="/">
+                <div class="wheel">
+                    <wheel></wheel>
+                </div>
+            </a>
+            <div style="max-height: 110px; overflow-y: hidden">
+                <h3 class="text-muted" style="padding-right: 400px;padding-top: 25px;">
+                    <span id="lblTitle">Prediction of hard to heal</span></h3>
+            </div>
+        </div>
+        <div class="container" id="fullpage">
+            <form method="post" action="./" id="form1" style="margin: 0 auto; position: relative" cssclass="form-inline">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="ISi722sU1EEjjYDQVIViiAIX51mmyPHcWHnidBHmLWivRI6IjizjE2pLKfYb302UklAVDUX3/IZUaC6jSQg/xoVmj/v2juMXjPpsfZHgZSnScdLvJSm/ge0PiuQUzOSY3qv3jcazENf3zV8dcZluZ/Urs2uVjjlEwkWXdAuxHgIRBgpLyhO/MeZ6bWTA/lLU14IfwVrdewzMHToPoHD3deBm15weIQJykGiTHNfxilc=" />
+</div>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="NPvprIlBq51G/msjv8tFsjnBm/4ywanoMAa6CAl4GVn2vCWVClykfVrem6brK6TuEJiw7p8zYjQQEiBl0e3OkggoQVds6ClV718LuJ0k7nplLhS308D3md55Sjo0a8F5wT4LqRIaGBmWBnn8FR/2FTGWwJ7Ox2sAzpoer6K8Z9uFiOgEtqqxbpoDYclkum6oKzayHJdx4soZMNLTudyXSLpxft2aotrHgpIwmwq/s6sLdcu/ttQqI1sKC3zDHeHlJ62oaLzolj5Egq2BcvMDB4jgENX3EHmoqoeBDwOH+P+GsBn7gO0VHBlow2a5hXhTaeaUTjuO02n1rAb3Y6nO1A0aIPYxvKZTFUDV1vDysZI=" />
+</div>
+                <div id="divMain">
+                    
+                    <fieldset style="margin-top: 30px" id="input1 Parameters">
+                        <legend>Input1 Parameters</legend>
+                        <div id="divinput1 Parameters">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    {% comment %}input1 + Gender Insulin BloodGlucose SmokingHistory WoundArea Retinopathy Disease Albumin CRP Creatinine{% endcomment %}
+                                    <p>
+                                        <div class="form-group">
+                                            <span id="lblinput1Gender" Class="fieldname">Gender</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Gender" value="0" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1Gender" type="number" value="0" id="input1Gender" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Gender").oninput = function(event){document.getElementById("input1Gender").value = event.target.value};document.getElementById("input1Gender").onchange = function(event){document.getElementById("slider_input1Gender").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0 = Female; 1 = Male. </samp>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span id="lblinput1Insulin" Class="fieldname">Current use of Insulin</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Insulin" value="0" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1Insulin" type="number" value="0" id="input1Insulin" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Insulin").oninput = function(event){document.getElementById("input1Insulin").value = event.target.value};document.getElementById("input1Insulin").onchange = function(event){document.getElementById("slider_input1Insulin").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0 = No; 1 = Yes. </samp>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span id="lblinput1BloodGlucose" Class="fieldname">Random Blood Glucose(mmol/L)</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1BloodGlucose" value="0" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1BloodGlucose" type="number" value="0" id="input1BloodGlucose" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1BloodGlucose").oninput = function(event){document.getElementById("input1BloodGlucose").value = event.target.value};document.getElementById("input1BloodGlucose").onchange = function(event){document.getElementById("slider_input1BloodGlucose").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>Random Blood Glucose < 11.1mmol/L -> 0;<br> Random Blood Glucose >= 11.1mmol/L -> 1.</samp>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <span id="lblinput1SmokingHistory" Class="fieldname">Smoking History</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1SmokingHistory" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control" value="0"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1SmokingHistory" type="number" value="0" id="input1SmokingHistory" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1SmokingHistory").oninput = function(event){document.getElementById("input1SmokingHistory").value = event.target.value};document.getElementById("input1SmokingHistory").onchange = function(event){document.getElementById("slider_input1SmokingHistory").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0 = No; 1 = Yes.</samp>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group">
+                                            <span id="lblinput1Creatinine" Class="fieldname">Creatinine(μmol/L)</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Creatinine" value="0" type="range" min="0" max="4" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">4</span>
+                                                <input name="input1Creatinine" type="number" value="0" id="input1Creatinine" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Creatinine").oninput = function(event){document.getElementById("input1Creatinine").value = event.target.value};document.getElementById("input1Creatinine").onchange = function(event){document.getElementById("slider_input1Creatinine").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>54μmol/L <= Creatinine < 134mmol/L -> 0;<br>
+                                                    134μmol/L <= Creatinine < 187mmol/L -> 1;<br>
+                                                    187μmol/L <= Creatinine < 452mmol/L -> 2;<br>
+                                                    452μmol/L <= Creatinine < 772mmol/L -> 3;<br>
+                                                    Creatinine => 772mol/L -> 4. </samp>
+                                            </div>
+                                        </div>
+                                        
+                                    </p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p>
+                                        <div class="form-group">
+                                            <span id="lblinput1Retinopathy" Class="fieldname">Retinopathy</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Retinopathy" value="0" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1Retinopathy" type="number" value="0" id="input1Retinopathy" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Retinopathy").oninput = function(event){document.getElementById("input1Retinopathy").value = event.target.value};document.getElementById("input1Retinopathy").onchange = function(event){document.getElementById("slider_input1Retinopathy").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0 = No; 1 = Yes.</samp>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <span id="lblinput1Disease" Class="fieldname">Peripheral Arterial Disease</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Disease" value="0" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1Disease" type="number" value="0" id="input1Disease" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Disease").oninput = function(event){document.getElementById("input1Disease").value = event.target.value};document.getElementById("input1Disease").onchange = function(event){document.getElementById("slider_input1Disease").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0 = No; 1 = Yes.</samp>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span id="lblinput1Albumin" Class="fieldname">Albumin(g/L)</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1Albumin" value="0" type="range" min="0" max="3" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">3</span>
+                                                <input name="input1Albumin" type="number" value="0" id="input1Albumin" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1Albumin").oninput = function(event){document.getElementById("input1Albumin").value = event.target.value};document.getElementById("input1Albumin").onchange = function(event){document.getElementById("slider_input1Albumin").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>35.0g/L <= Albumin < 50.0g/L -> 0;<br>
+                                                    25.0g/L <= Albumin < 34.9g/L -> 1;<br>
+                                                    Albumin < 25.0g/L -> 2.
+                                                </samp>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span id="lblinput1CRP" Class="fieldname">C-Reactive Protein (CRP)(mg/L)</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1CRP" type="range" value="0" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">1</span>
+                                                <input name="input1CRP" type="number" value="0" id="input1CRP" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>document.getElementById("slider_input1CRP").oninput = function(event){document.getElementById("input1CRP").value = event.target.value};document.getElementById("input1CRP").onchange = function(event){document.getElementById("slider_input1CRP").value = event.target.value};</script>
+                                            <div style="width=:100%">
+                                                <samp>0mg/L <= CRP < 8mg/L -> 0; Albumin >= 8g/L -> 1.</samp>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <span id="lblinput1WoundArea" Class="fieldname">Wound Area(cm<sup>2</sup>)</span>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">0</span>
+                                                <input id="slider_input1WoundArea" value="0" type="range" min="0" max="3" step="1" class="slider slider-displayHTML form-control"/>
+                                                <span class="input-group-addon">3</span>
+                                                <input name="input1WoundArea" type="number" value="0" id="input1WoundArea" Class="amount form-control form-control-number" />
+                                            </div>
+                                            <script>
+                                                document.getElementById("slider_input1WoundArea").oninput = function(event){
+                                                    document.getElementById("input1WoundArea").value = event.target.value
+                                                };
+                                                document.getElementById("input1WoundArea").onchange = function(event){
+                                                    document.getElementById("slider_input1WoundArea").value = event.target.value
+                                                };
+                                            </script>
+                                            <div style="width=:100%">
+                                                <samp>0cm<sup>2</sup> <= Wound Area < 5cm<sup>2</sup>L -> 0;<br>
+                                                    5cm<sup>2</sup> <= Wound Area < 17cm<sup>2</sup> -> 1;<br>
+                                                    17cm<sup>2</sup> <= Wound Area < 26cm<sup>2</sup> -> 2;<br>
+                                                    Wound Area => 26cm<sup>2</sup> -> 3. </samp>
+                                            </div>
+                                        </div>
+
+                                        {% comment %} <div class="form-group"><span id="lblinput1PNI" Class="fieldname">Perineural Invasion (PNI).</span><div class="input-group"><span class="input-group-addon">0</span><input id="slider_input1PNI" type="range" min="0" max="1" step="1" class="slider slider-displayHTML form-control"/><span class="input-group-addon">1</span><input name="input1PNI" type="number" value="0" id="input1PNI" Class="amount form-control form-control-number" /></div><script>document.getElementById("slider_input1PNI").oninput = function(event){document.getElementById("input1PNI").value = event.target.value};document.getElementById("input1PNI").onchange = function(event){document.getElementById("slider_input1PNI").value = event.target.value};</script><div style="width=:100%"><samp>0 = Absent ; 1 = Present.</samp></div></div><div class="form-group"><span id="lblinput1Disease" Class="fieldname">Disease Free Months</span><div class="input-group"><span class="input-group-addon">1</span><input id="slider_input1Disease" type="range" min="1" max="500" step="1" class="slider slider-displayHTML form-control"/><span class="input-group-addon">500</span><input name="input1Disease" type="number" value="1" id="input1Disease" Class="amount form-control form-control-number" /></div><script>document.getElementById("slider_input1Disease").oninput = function(event){document.getElementById("input1Disease").value = event.target.value};document.getElementById("input1Disease").onchange = function(event){document.getElementById("slider_input1Disease").value = event.target.value};</script><div style="width=:100%"><samp>Disease-free time (in months).</samp></div></div><div class="form-group"><span id="lblinput1Tmonths" Class="fieldname">Follow-Up Time (In Months).</span><div class="input-group"><span class="input-group-addon">0</span><input id="slider_input1Tmonths" type="range" min="0" max="500" step="1" class="slider slider-displayHTML form-control"/><span class="input-group-addon">500</span><input name="input1Tmonths" type="number" value="0" id="input1Tmonths" Class="amount form-control form-control-number" /></div><script>document.getElementById("slider_input1Tmonths").oninput = function(event){document.getElementById("input1Tmonths").value = event.target.value};document.getElementById("input1Tmonths").onchange = function(event){document.getElementById("slider_input1Tmonths").value = event.target.value};</script>
+                                        </div> {% endcomment %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    {% csrf_token %}
+                    
+                    <!-- <fieldset style="margin-top: 30px" id="global_param">
+                        <legend>Global Prameters</legend>
+
+                        <div id="divControlsGlobal">
+                            <div class="row">
+                                <div class="col-lg-6" id="col-global-1">
+                                    <p>
+                                        
+                                    </p>
+                                </div>
+                                <div class="col-lg-6" id="col-global-2">
+                                    <p>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset style="margin-top: 30px" id="intput_param">
+                        <legend>Input Prameters</legend>
+                        <div id="divControls">
+                            <div class="row">
+                                <div class="col-lg-6" id="col-1">
+                                    <p>
+                                        
+                                    </p>
+                                </div>
+                                <div class="col-lg-6" id="col-2">
+                                    <p>
+                                        
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                        -->
+
+                <div id="submitDiv">
+                    <input type="submit" name="btnSubmit" value="Predict" id="btnSubmit" class="btn btn-primary btnSubmit"/ action="">
+                </div>
+
+                <div id="divResult">
+                    <p class="titleresult">Result</p>
+                    <table class="table table-hover table-bordered">
+                        <tr class="info">
+                            <th>Label</th>
+                            <th>Value</th>
+                            <th>Probability</th>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="background-color: azure">output1</td>
+                        </tr>
+                        <tr>
+                            <td class="textresult">Predictive Hard-to-heal DFU Value is: Results Interpretation: [0] Means Low Risk of Hard-to-heal DFU . [1] Means High Risk of Hard-to-heal DFU</td>
+                            <td style="word-break: break-all;">{{label}}</td>
+                            <td style="word-break: break-all;">{{probability}}</td>
+                        </tr>
+                    </table>
+                    <div id="topLoader"></div>
+                </div>
+                
+                <div id="footer">
+                    <div class="footerText">
+                        <p style="color:green;justify-content:right">Disclaimer: <strong>This website is intended to be used for research purpose only. Authors can not guarantee the accuracy of the calculation for any particular patient. Any decision about diabetic foot ulcers treatment should be made solely in consultation with a licensed specialist.
+                        </strong></p>
+                    </div>
+
+                </div>
+                
+                
+                <div id="footer">
+                    <div class="footerText">
+                        <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software institute,Nanjing University and <strong>Shiqi Wang</strong> at the Medical school,Nanjing University. It is part of a research project. This web tool was trained with patients' data from two Chinese Grade-IIIA hospitals.</p>
+                    </div>
+                    
+
+                </div>
+                
+                <div id="footer">
+                    <div class="footerText">
+                        <p style="color:slateblue;justify-content:right">For feedbacks and comments, please contact: wangshiqi@smail.nju.edu.cn.</p>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        <!-- /container -->
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script type="text/javascript" src="/src/Scripts/js/ie10-viewport-bug-workaround.js"></script>
+        
+</body>
+</html>
+<script type="text/javascript" src="/src/Scripts/wheels.js"></script>
