@@ -79,6 +79,13 @@
             border-radius: 10px;
         }
 
+        .pastMedicalHistory {
+            border: 2px solid #ccc; /* 设置边框为2像素宽的实线，并指定颜色为灰色 */
+            padding: 20px; /* 可选 - 添加内边距，使内容不会紧贴边框 */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
         .personalInfo::before {
             content: "Personal Information"; /* 伪元素内容，即要添加的文本 */
             display: block;
@@ -135,7 +142,6 @@
 
                                 <div class="personalInfo">
                                     <div class="col-lg-6">
-
                                         <div class="form-group">
                                             <span class="fieldname">Gender</span>
                                             <input type="hidden" name="input1Gender" value="" id="input1Gender">
@@ -185,6 +191,153 @@
                                             <script>
                                             </script>
 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pastMedicalHistory">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span Class="fieldname">Current use of Insulin</span>
+                                            <input type="hidden" name="input1Insulin" value="" id="input1Insulin">
+                                            <div class="btn-group" role="group" aria-label="Insulin">
+                                                <button type="button" class="btn btn-secondary mr-2" id="noInsulin">
+                                                    No
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="yesInsulin">Yes
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("noInsulin").addEventListener("click", function () {
+                                                    document.getElementById("input1Insulin").value = "0";
+                                                    document.getElementById("noInsulin").classList.add("active");
+                                                    document.getElementById("yesInsulin").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesInsulin").addEventListener("click", function () {
+                                                    document.getElementById("input1Insulin").value = "1";
+                                                    document.getElementById("yesInsulin").classList.add("active");
+                                                    document.getElementById("noInsulin").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Insulin").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noInsulin").classList.add("active");
+                                                        document.getElementById("yesInsulin").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesInsulin").classList.add("active");
+                                                        document.getElementById("noInsulin").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <span Class="fieldname">Retinopathy</span>
+                                            <input type="hidden" name="input1Retinopathy" value=""
+                                                   id="input1Retinopathy">
+                                            <div class="btn-group" role="group" aria-label="Retinopathy">
+                                                <button type="button" class="btn btn-secondary mr-2" id="noRetinopathy">
+                                                    No
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="yesRetinopathy">Yes
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("noRetinopathy").addEventListener("click", function () {
+                                                    document.getElementById("input1Retinopathy").value = "0";
+                                                    document.getElementById("noRetinopathy").classList.add("active");
+                                                    document.getElementById("yesRetinopathy").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesRetinopathy").addEventListener("click", function () {
+                                                    document.getElementById("input1Retinopathy").value = "1";
+                                                    document.getElementById("yesRetinopathy").classList.add("active");
+                                                    document.getElementById("noRetinopathy").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Retinopathy").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noRetinopathy").classList.add("active");
+                                                        document.getElementById("yesRetinopathy").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesRetinopathy").classList.add("active");
+                                                        document.getElementById("noRetinopathy").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span Class="fieldname">Peripheral Arterial Disease</span>
+                                            <input type="hidden" name="input1Disease" value="" id="input1Disease">
+                                            <div class="btn-group" role="group" aria-label="Disease">
+                                                <button type="button" class="btn btn-secondary mr-2" id="noDisease">
+                                                    No
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="yesDisease">Yes
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("noDisease").addEventListener("click", function () {
+                                                    document.getElementById("input1Disease").value = "0";
+                                                    document.getElementById("noDisease").classList.add("active");
+                                                    document.getElementById("yesDisease").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesDisease").addEventListener("click", function () {
+                                                    document.getElementById("input1Disease").value = "1";
+                                                    document.getElementById("yesDisease").classList.add("active");
+                                                    document.getElementById("noDisease").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Disease").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noDisease").classList.add("active");
+                                                        document.getElementById("yesDisease").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesDisease").classList.add("active");
+                                                        document.getElementById("noDisease").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <span Class="fieldname">Smoking History</span>
+                                            <input type="hidden" name="input1SmokingHistory" value=""
+                                                   id="input1SmokingHistory">
+                                            <div class="btn-group" role="group" aria-label="SmokingHistory">
+                                                <button type="button" class="btn btn-secondary mr-2"
+                                                        id="noSmokingHistory">
+                                                    No
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="yesSmokingHistory">
+                                                    Yes
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("noSmokingHistory").addEventListener("click", function () {
+                                                    document.getElementById("input1SmokingHistory").value = "0";
+                                                    document.getElementById("noSmokingHistory").classList.add("active");
+                                                    document.getElementById("yesSmokingHistory").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesSmokingHistory").addEventListener("click", function () {
+                                                    document.getElementById("input1SmokingHistory").value = "1";
+                                                    document.getElementById("yesSmokingHistory").classList.add("active");
+                                                    document.getElementById("noSmokingHistory").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1SmokingHistory").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noSmokingHistory").classList.add("active");
+                                                        document.getElementById("yesSmokingHistory").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesSmokingHistory").classList.add("active");
+                                                        document.getElementById("noSmokingHistory").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -407,8 +560,7 @@
                                                         } else if (inputValue >= 54 && inputValue < 134) {
                                                             document.getElementById("input1Creatinine").value = "3";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
-                                                        }
-                                                        else {
+                                                        } else {
                                                             // 其余数据为错误数据
                                                             document.getElementById("errorTextCreatinine").innerText = "Please enter a valid value";
                                                         }
@@ -426,60 +578,44 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p>
 
 
-                                </p>
                             </div>
                         </div>
                     </div>
                 </fieldset>
                 {% csrf_token %}
-
-                <!-- <fieldset style="margin-top: 30px" id="global_param">
-                    <legend>Global Prameters</legend>
-
-                    <div id="divControlsGlobal">
-                        <div class="row">
-                            <div class="col-lg-6" id="col-global-1">
-                                <p>
-
-                                </p>
-                            </div>
-                            <div class="col-lg-6" id="col-global-2">
-                                <p>
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <fieldset style="margin-top: 30px" id="intput_param">
-                    <legend>Input Prameters</legend>
-                    <div id="divControls">
-                        <div class="row">
-                            <div class="col-lg-6" id="col-1">
-                                <p>
-
-                                </p>
-                            </div>
-                            <div class="col-lg-6" id="col-2">
-                                <p>
-
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-
-                    -->
-
                 <div id="submitDiv">
-                    <input type="submit" name="btnSubmit" value="Predict" id="btnSubmit"
+                    <input name="btnSubmit" value="Predict" id="btnSubmit"
                            class="btn btn-primary btnSubmit" action="">
                 </div>
+                <script>
+                    document.getElementById('btnSubmit').addEventListener('click', function (e) {
+                        e.preventDefault();
+
+                        // 构造请求的数据
+                        var data = new FormData();
+                        // 添加需要发送的数据
+                        data.append('input1Gender', document.getElementById('input1Gender').value);
+                        data.append('input1Age', document.getElementById('input1Age').value);
+                        // 添加其他input字段...
+
+                        // 发送POST请求
+                        fetch('/predict/', {
+                            method: 'POST',
+                            body: data
+                        })
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (result) {
+                                // 更新label和probability
+                                document.getElementById('label').textContent = result.label;
+                                document.getElementById('probability').textContent = result.probability;
+                            });
+                    });
+                </script>
+
 
                 <div id="divResult">
                     <p class="titleresult">Result</p>
@@ -496,8 +632,8 @@
                             <td class="textresult">Predictive Hard-to-heal DFU Value is: Results Interpretation: [0]
                                 Means Low Risk of Hard-to-heal DFU . [1] Means High Risk of Hard-to-heal DFU
                             </td>
-                            <td style="word-break: break-all;">{{ label }}</td>
-                            <td style="word-break: break-all;">{{ probability }}</td>
+                            <td id="label" style="word-break: break-all;"></td>
+                            <td id="probability" style="word-break: break-all;"></td>
                         </tr>
                     </table>
                     <div id="topLoader"></div>
@@ -533,13 +669,13 @@
                     </div>
 
                 </div>
-
+            </div>
         </form>
     </div>
     <!-- /container -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script type="text/javascript" src="/src/Scripts/js/ie10-viewport-bug-workaround.js"></script>
-
+</div>
 </body>
 </html>
 <script type="text/javascript" src="/src/Scripts/wheels.js"></script>
