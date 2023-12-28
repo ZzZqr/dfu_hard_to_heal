@@ -372,10 +372,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
-                                                <span id="infoIconGlucose" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconGlucose"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                         {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxGlucose()" onmouseout="hideTextBoxGlucose()">
-                                                        <div id="floatingTextBoxGlucose" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                        <img src="{% static 'images/question_mark.png' %}"
+                                                             alt="Information Icon" width="20" height="20"
+                                                             onmouseover="showTextBoxGlucose()"
+                                                             onmouseout="hideTextBoxGlucose()">
+                                                        <div id="floatingTextBoxGlucose" class="dialog-style"
+                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
                                                             Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line
                                                         </div>
                                                  </span>
@@ -392,27 +397,31 @@
                                                 }
 
                                                 document.getElementById("input1BloodGlucoseDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1BloodGlucoseDummy").value);
+                                                    validateInputGlucose();
+                                                });
 
-                                                    if (!isNaN(inputValue)) {
+                                                function validateInputGlucose() {
+                                                    var inputValue = document.getElementById("input1BloodGlucoseDummy").value.trim();
+                                                    var errorTextBloodGlucose = document.getElementById("errorTextBloodGlucose");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
                                                         if (inputValue >= 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "0";
-                                                            document.getElementById("errorTextBloodGlucose").innerText = "";
+                                                            errorTextBloodGlucose.innerText = "";
                                                         } else if (inputValue > 0 && inputValue < 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "1";
-                                                            document.getElementById("errorTextBloodGlucose").innerText = "";
+                                                            errorTextBloodGlucose.innerText = "";
                                                         } else {
-                                                            document.getElementById("errorTextBloodGlucose").innerText = "Please enter a valid value";
+                                                            errorTextBloodGlucose.innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        document.getElementById("errorTextBloodGlucose").innerText = "Please enter a valid number";
+                                                        errorTextBloodGlucose.innerText = "Please enter a valid number";
                                                     }
-                                                });
-
-                                                document.getElementById("input1BloodGlucoseDummy").addEventListener("focus", function () {
-                                                    document.getElementById("errorTextBloodGlucose").innerText = "";
-                                                });
+                                                }
                                             </script>
+
                                         </div>
 
 
@@ -426,10 +435,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
-                                                <span id="infoIconAlbumin" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconAlbumin"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxAlbumin()" onmouseout="hideTextBoxAlbumin()">
-                                                    <div id="floatingTextBoxAlbumin" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxAlbumin()"
+                                                         onmouseout="hideTextBoxAlbumin()">
+                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
                                                         Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
                                                     </div>
                                                 </span>
@@ -445,10 +459,18 @@
                                                 function hideTextBoxAlbumin() {
                                                     document.getElementById("floatingTextBoxAlbumin").style.display = "none";
                                                 }
-                                                document.getElementById("input1AlbuminDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1AlbuminDummy").value); // 获取输入框中的数值
 
-                                                    if (!isNaN(inputValue)) {
+                                                document.getElementById("input1AlbuminDummy").addEventListener("change", function () {
+                                                    validateInputAlbumin();
+                                                });
+
+                                                function validateInputAlbumin() {
+                                                    var inputValue = document.getElementById("input1AlbuminDummy").value.trim();
+                                                    var errorTextAlbumin = document.getElementById("errorTextAlbumin");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
                                                         if (inputValue >= 35 && inputValue < 50) {
                                                             document.getElementById("input1Albumin").value = "0";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
@@ -463,15 +485,9 @@
                                                             document.getElementById("errorTextAlbumin").innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        // 输入值不是数字
-                                                        document.getElementById("errorTextAlbumin").innerText = "Please enter a valid number";
+                                                        errorTextAlbumin.innerText = "Please enter a valid number";
                                                     }
-                                                });
-
-                                                document.getElementById("input1AlbuminDummy").addEventListener("focus", function () {
-                                                    document.getElementById("errorTextAlbumin").innerText = "";
-                                                });
-
+                                                }
                                             </script>
                                         </div>
 
@@ -485,10 +501,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
-                                                <span id="infoIconCRP" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconCRP"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                         {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCRP()" onmouseout="hideTextBoxCRP()">
-                                                        <div id="floatingTextBoxCRP" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
+                                                        <img src="{% static 'images/question_mark.png' %}"
+                                                             alt="Information Icon" width="20" height="20"
+                                                             onmouseover="showTextBoxCRP()"
+                                                             onmouseout="hideTextBoxCRP()">
+                                                        <div id="floatingTextBoxCRP" class="dialog-style"
+                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
                                                         C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line
                                                         </div>
                                                 </span>
@@ -504,10 +525,18 @@
                                                 function hideTextBoxCRP() {
                                                     document.getElementById("floatingTextBoxCRP").style.display = "none";
                                                 }
-                                                document.getElementById("input1CRPDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1CRPDummy").value); // 获取输入框中的数值
 
-                                                    if (!isNaN(inputValue)) {
+                                                document.getElementById("input1CRPDummy").addEventListener("change", function () {
+                                                    validateInputCRP();
+                                                });
+
+                                                function validateInputCRP() {
+                                                    var inputValue = document.getElementById("input1CRPDummy").value.trim();
+                                                    var errorTextCRP = document.getElementById("errorTextCRP");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
                                                         if (inputValue >= 8) {
                                                             document.getElementById("input1CRP").value = "1";
                                                             document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
@@ -519,14 +548,9 @@
                                                             document.getElementById("errorTextCRP").innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        // 输入值不是数字
-                                                        document.getElementById("errorTextCRP").innerText = "Please enter a valid number";
+                                                        errorTextCRP.innerText = "Please enter a valid number";
                                                     }
-                                                });
-
-                                                document.getElementById("input1CRPDummy").addEventListener("focus", function () {
-                                                    document.getElementById("errorTextCRP").innerText = "";
-                                                });
+                                                }
 
                                             </script>
                                         </div>
@@ -545,10 +569,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
-                                                <span id="infoIconWoundArea" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconWoundArea"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxWoundArea()" onmouseout="hideTextBoxWoundArea()">
-                                                    <div id="floatingTextBoxWoundArea" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxWoundArea()"
+                                                         onmouseout="hideTextBoxWoundArea()">
+                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
                                                     Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line
                                                     </div>
                                                 </span>
@@ -564,10 +593,18 @@
                                                 function hideTextBoxWoundArea() {
                                                     document.getElementById("floatingTextBoxWoundArea").style.display = "none";
                                                 }
-                                                document.getElementById("input1WoundAreaDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1WoundAreaDummy").value); // 获取输入框中的数值
 
-                                                    if (!isNaN(inputValue)) {
+                                                document.getElementById("input1WoundAreaDummy").addEventListener("change", function () {
+                                                    validateInputWoundArea();
+                                                });
+
+                                                function validateInputWoundArea() {
+                                                    var inputValue = document.getElementById("input1WoundAreaDummy").value.trim();
+                                                    var errorTextWoundArea = document.getElementById("errorTextWoundArea");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
                                                         if (inputValue >= 26) {
                                                             document.getElementById("input1WoundArea").value = "3";
                                                             document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
@@ -585,14 +622,9 @@
                                                             document.getElementById("errorTextWoundArea").innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        // 输入值不是数字
-                                                        document.getElementById("errorTextWoundArea").innerText = "Please enter a valid number";
+                                                        errorTextWoundArea.innerText = "Please enter a valid number";
                                                     }
-                                                });
-
-                                                document.getElementById("input1WoundAreaDummy").addEventListener("focus", function () {
-                                                    document.getElementById("errorTextWoundArea").innerText = "";
-                                                });
+                                                }
 
                                             </script>
                                         </div>
@@ -610,8 +642,12 @@
                                                 <span id="infoIconCreatinine"
                                                       style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCreatinine()" onmouseout="hideTextBoxCreatinine()">
-                                                    <div id="floatingTextBoxCreatinine" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxCreatinine()"
+                                                         onmouseout="hideTextBoxCreatinine()">
+                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
                                                     Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line
                                                     </div>
                                                 </span>
@@ -627,10 +663,18 @@
                                                 function hideTextBoxCreatinine() {
                                                     document.getElementById("floatingTextBoxCreatinine").style.display = "none";
                                                 }
-                                                document.getElementById("input1CreatinineDummy").addEventListener("change", function () {
-                                                    var inputValue = parseFloat(document.getElementById("input1CreatinineDummy").value); // 获取输入框中的数值
 
-                                                    if (!isNaN(inputValue)) {
+                                                document.getElementById("input1CreatinineDummy").addEventListener("change", function () {
+                                                    validateInputCreatinine();
+                                                });
+
+                                                function validateInputCreatinine() {
+                                                    var inputValue = document.getElementById("input1CreatinineDummy").value.trim();
+                                                    var errorTextCreatinine = document.getElementById("errorTextCreatinine");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
                                                         if (inputValue >= 772) {
                                                             document.getElementById("input1Creatinine").value = "4";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
@@ -651,14 +695,10 @@
                                                             document.getElementById("errorTextCreatinine").innerText = "Please enter a valid value";
                                                         }
                                                     } else {
-                                                        // 输入值不是数字
-                                                        document.getElementById("errorTextCreatinine").innerText = "Please enter a valid number";
+                                                        errorTextCreatinine.innerText = "Please enter a valid number";
                                                     }
-                                                });
+                                                }
 
-                                                document.getElementById("input1CreatinineDummy").addEventListener("focus", function () {
-                                                    document.getElementById("errorTextCreatinine").innerText = "";
-                                                });
 
                                             </script>
                                         </div>
