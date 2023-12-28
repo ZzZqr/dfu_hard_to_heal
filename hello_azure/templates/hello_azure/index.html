@@ -372,10 +372,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
-                                                <span id="infoIconGlucose" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconGlucose"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                         {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxGlucose()" onmouseout="hideTextBoxGlucose()">
-                                                        <div id="floatingTextBoxGlucose" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                        <img src="{% static 'images/question_mark.png' %}"
+                                                             alt="Information Icon" width="20" height="20"
+                                                             onmouseover="showTextBoxGlucose()"
+                                                             onmouseout="hideTextBoxGlucose()">
+                                                        <div id="floatingTextBoxGlucose" class="dialog-style"
+                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
                                                             Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line
                                                         </div>
                                                  </span>
@@ -426,10 +431,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
-                                                <span id="infoIconAlbumin" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconAlbumin"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxAlbumin()" onmouseout="hideTextBoxAlbumin()">
-                                                    <div id="floatingTextBoxAlbumin" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxAlbumin()"
+                                                         onmouseout="hideTextBoxAlbumin()">
+                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
                                                         Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
                                                     </div>
                                                 </span>
@@ -445,6 +455,7 @@
                                                 function hideTextBoxAlbumin() {
                                                     document.getElementById("floatingTextBoxAlbumin").style.display = "none";
                                                 }
+
                                                 document.getElementById("input1AlbuminDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1AlbuminDummy").value); // 获取输入框中的数值
 
@@ -485,10 +496,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
-                                                <span id="infoIconCRP" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconCRP"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                         {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCRP()" onmouseout="hideTextBoxCRP()">
-                                                        <div id="floatingTextBoxCRP" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
+                                                        <img src="{% static 'images/question_mark.png' %}"
+                                                             alt="Information Icon" width="20" height="20"
+                                                             onmouseover="showTextBoxCRP()"
+                                                             onmouseout="hideTextBoxCRP()">
+                                                        <div id="floatingTextBoxCRP" class="dialog-style"
+                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
                                                         C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line
                                                         </div>
                                                 </span>
@@ -504,6 +520,7 @@
                                                 function hideTextBoxCRP() {
                                                     document.getElementById("floatingTextBoxCRP").style.display = "none";
                                                 }
+
                                                 document.getElementById("input1CRPDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1CRPDummy").value); // 获取输入框中的数值
 
@@ -545,10 +562,15 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
-                                                <span id="infoIconWoundArea" style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
+                                                <span id="infoIconWoundArea"
+                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxWoundArea()" onmouseout="hideTextBoxWoundArea()">
-                                                    <div id="floatingTextBoxWoundArea" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxWoundArea()"
+                                                         onmouseout="hideTextBoxWoundArea()">
+                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
                                                     Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line
                                                     </div>
                                                 </span>
@@ -564,6 +586,7 @@
                                                 function hideTextBoxWoundArea() {
                                                     document.getElementById("floatingTextBoxWoundArea").style.display = "none";
                                                 }
+
                                                 document.getElementById("input1WoundAreaDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1WoundAreaDummy").value); // 获取输入框中的数值
 
@@ -610,8 +633,12 @@
                                                 <span id="infoIconCreatinine"
                                                       style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
                                                     {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}" alt="Information Icon" width="20" height="20" onmouseover="showTextBoxCreatinine()" onmouseout="hideTextBoxCreatinine()">
-                                                    <div id="floatingTextBoxCreatinine" class="dialog-style" style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
+                                                    <img src="{% static 'images/question_mark.png' %}"
+                                                         alt="Information Icon" width="20" height="20"
+                                                         onmouseover="showTextBoxCreatinine()"
+                                                         onmouseout="hideTextBoxCreatinine()">
+                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"
+                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
                                                     Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line
                                                     </div>
                                                 </span>
@@ -627,6 +654,7 @@
                                                 function hideTextBoxCreatinine() {
                                                     document.getElementById("floatingTextBoxCreatinine").style.display = "none";
                                                 }
+
                                                 document.getElementById("input1CreatinineDummy").addEventListener("change", function () {
                                                     var inputValue = parseFloat(document.getElementById("input1CreatinineDummy").value); // 获取输入框中的数值
 
@@ -678,12 +706,43 @@
                     document.getElementById('btnSubmit').addEventListener('click', function (e) {
                         e.preventDefault();
 
+                        const Age = document.getElementById('input1Age').value;
+                        const Sex = document.getElementById('input1Gender').value;
+                        const Use_of_insulin = document.getElementById('input1Insulin').value;
+                        const Random_blood_glucose = document.getElementById('input1BloodGlucose').value;
+                        const CRP = document.getElementById('input1CRP').value;
+                        const Wound_area = document.getElementById('input1WoundArea').value;
+                        const Retinopathy = document.getElementById('input1Retinopathy').value;
+                        const Peripheral_arterial_disease = document.getElementById('input1Disease').value;
+                        const Smoking_history = document.getElementById('input1SmokingHistory').value;
+                        const Albumin = document.getElementById('input1Albumin').value;
+                        const Creatinine = document.getElementById('input1Creatinine').value;
+
+
+                        if (Age === '' || Sex === '' || Use_of_insulin === '' || Random_blood_glucose === '' || CRP === '' || Wound_area === '' || Retinopathy === '' || Peripheral_arterial_disease === '' || Smoking_history === '' || Albumin === '' || Creatinine === '') {
+                            // 如果某个字段为空，则在页面上新增一个提示控件
+                            const errorMessage = document.createElement('p');
+                            errorMessage.textContent = '某个值为空，请填写完整';
+                            document.getElementById('submitDiv').insertAdjacentElement('afterend', errorMessage);
+                            return; // 不执行后续的 POST 请求
+                        }
+
+
                         // 构造请求的数据
-                        var data = new FormData();
+                        const data = new FormData();
                         // 添加需要发送的数据
-                        data.append('input1Gender', document.getElementById('input1Gender').value);
-                        data.append('input1Age', document.getElementById('input1Age').value);
-                        // 添加其他input字段...
+                        data.append('Age', Age);
+                        data.append('Sex', Sex);
+                        data.append('Use_of_insulin', Use_of_insulin);
+                        data.append('Random_blood_glucose', Random_blood_glucose);
+                        data.append('CRP', CRP);
+                        data.append('Wound_area', Wound_area);
+                        data.append('Retinopathy', Retinopathy);
+                        data.append('Peripheral_arterial_disease', Peripheral_arterial_disease);
+                        data.append('Smoking_history', Smoking_history);
+                        data.append('Albumin', Albumin);
+                        data.append('Creatinine', Creatinine);
+
 
                         // 发送POST请求
                         fetch('/predict/', {
