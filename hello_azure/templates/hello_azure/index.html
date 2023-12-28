@@ -713,10 +713,16 @@
                 <div id="submitDiv">
                     <input name="btnSubmit" value="Predict" id="btnSubmit"
                            class="btn btn-primary btnSubmit" action="">
+
+                    <div id="valueError" style="display: none">
+                        <p style="float: right; color: red;">Null value exists!</p>
+                    </div>
                 </div>
                 <script>
                     document.getElementById('btnSubmit').addEventListener('click', function (e) {
                         e.preventDefault();
+
+                        document.getElementById("valueError").style.display = 'none';
 
                         const Age = document.getElementById('input1Age').value;
                         const Sex = document.getElementById('input1Gender').value;
@@ -733,9 +739,7 @@
 
                         if (Age === '' || Sex === '' || Use_of_insulin === '' || Random_blood_glucose === '' || CRP === '' || Wound_area === '' || Retinopathy === '' || Peripheral_arterial_disease === '' || Smoking_history === '' || Albumin === '' || Creatinine === '') {
                             // 如果某个字段为空，则在页面上新增一个提示控件
-                            const errorMessage = document.createElement('p');
-                            errorMessage.textContent = '某个值为空，请填写完整';
-                            document.getElementById('submitDiv').insertAdjacentElement('afterend', errorMessage);
+                            document.getElementById("valueError").style.display = '';
                             return; // 不执行后续的 POST 请求
                         }
 
