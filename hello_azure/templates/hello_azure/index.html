@@ -779,6 +779,7 @@
                         if (Age === '' || Sex === '' || Use_of_insulin === '' || Random_blood_glucose === '' || CRP === '' || Wound_area === '' || Retinopathy === '' || Peripheral_arterial_disease === '' || Smoking_history === '' || Albumin === '' || Creatinine === '') {
                             // 如果某个字段为空，则在页面上新增一个提示控件
                             document.getElementById("valueError").style.display = '';
+                            _this.style.display = '';
                             return; // 不执行后续的 POST 请求
                         }
 
