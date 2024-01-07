@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head id="Head1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Azure Machine Learning Web Service"/>
+    <meta name="author"/>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/imageonline-co-pngtoicoimage.ico' %}"/>
+    <title>
+        Prediction of hard to heal
+    </title>
+    <!-- Bootstrap core CSS -->
+    <link href="/src/CSS/bootstrap.css" rel="stylesheet"/>
+    <link href="/src/CSS/jumbotron-narrow.css" rel="stylesheet"/>
+    <link href="/src/CSS/master.css" rel="stylesheet"/>
+
+    <!-- Java script / jQuery -->
+    <script type="text/javascript" src="/src/Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/src/Scripts/bootstrap.min.js"></script>
+
+    <!-- -->
+    <link href=/src/"CSS/jquery-ui-1.10.0.custom.min.css" rel="stylesheet"/>
+    <link href="/src/CSS/sliderIE.css" rel="stylesheet"/>
+    <link href="/src/CSS/sliderHTML.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/src/Scripts/sliderIE.js"></script>
+    <script src="/src/Scripts/sliderHTML.js"></script>
+    <script src="/src/Scripts/jquery-ui.js"></script>
+    <script src="/src/Scripts/master.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updateSliderIE();
+            updatesliderHTML();
+            updateResize();
+        });
+    </script>
+
+    <script>
+        export default {
+            props: {
+                title: {
+                    type: String,
+                    default: "提示",
+                },
+                alertInfo: {
+                    type: String,
+                    default: "提示内容",
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .loader-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .popupbox {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+            /* 为防止页面中有其他定位元素的z-index较大，可以将这里的z-index设置的得大一些 */
+            background-color: rgba(0, 0, 0, .5);
+            /* opacity: 0.5; */
+        }
+
+        .popupbox .main {
+            position: absolute;
+            width: 560px;
+            height: 300px;
+            top: 150px;
+            left: 50%;
+            margin-left: -280px;
+            background-color: white;
+            border-radius: 25px;
+            border-style: solid;
+            border-color: #2c3f7c;
+            border-width: 10px;
+        }
+
+        .main .title {
+            height: 60px;
+            background-color: #2c3f7c;
+            color: white;
+            line-height: 35px;
+            border-radius: 10px 10px 0 0;
+            font-size: 40px;
+            padding-left: 10px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .main .content {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            font-size: 20px;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main .btn {
+            width: 100%;
+        }
+
+        .btn button {
+            float: right;
+            margin-left: 100px;
+            margin-bottom: 1px;
+            background-color: #2c3f7c;
+            outline: none;
+            color: white;
+            border: none;
+            padding: 3px 12px;
+            border-radius: 5px;
+        }
+    </style>
+
+    <style>
+        /* CSS样式代码 */
+        .btn-group {
+            display: inline-flex;
+        }
+
+        .btn {
+            width: 100px;
+            margin-right: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary {
+            background-color: #eeeeee;
+            border-color: white;
+            border: none; /* 移除默认的按钮边框 */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* 添加阴影效果，可以根据需要调整阴影的大小和颜色 */
+        }
+
+        .btn-secondary.active,
+        .btn-secondary:focus,
+        .btn-secondary:active {
+            background-color: #337ab7;
+            color: white;
+            border-color: white;
+        }
+
+        #btnSubmit {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+
+    <style>
+        .personalInfo {
+            border: 2px solid #ccc; /* 设置边框为2像素宽的实线，并指定颜色为灰色 */
+            padding: 20px; /* 可选 - 添加内边距，使内容不会紧贴边框 */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .dfuData {
+            border: 2px solid #ccc; /* 设置边框为2像素宽的实线，并指定颜色为灰色 */
+            padding: 20px; /* 可选 - 添加内边距，使内容不会紧贴边框 */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .pastMedicalHistory {
+            border: 2px solid #ccc; /* 设置边框为2像素宽的实线，并指定颜色为灰色 */
+            padding: 20px; /* 可选 - 添加内边距，使内容不会紧贴边框 */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+
+    </style>
+    <style>
+        /* 添加标题样式 */
+        h3 {
+            margin-bottom: 10px; /* 设置标题下方的间距 */
+            font-weight: bold;
+        }
+
+        /* 控制各个div之间的间距 */
+        .row:not(:last-child) {
+            margin-bottom: 20px; /* 设置各个div之间的间距 */
+        }
+
+    </style>
+
+    <style>
+        .dialog-style::before {
+            content: none;
+        }
+    </style>
+
+</head>
+<body onresize="updateResize()">
+<div class="container azue-header">
+    {% load static %}
+    <div class="jumbotron azue-header"
+         style="background-image: url({% static '' %}); height: 126px; position: relative; padding-top: 10px;">
+        <a href="/">
+            <div class="wheel">
+                <wheel></wheel>
+            </div>
+        </a>
+        <div style="max-height: 110px; overflow-y: hidden; width:100%">
+            <div style="text-align: right">
+                <span class="underline" onclick="redirect()"
+                      onmouseover="changeCursor(this)"
+                      onmouseout="restoreCursor()"
+                      style="text-decoration: underline;color: white;text-align: right">English</span>
+            </div>
+            <script>
+                function redirect() {
+                    // 使用 window.location.href 实现页面跳转
+                    window.location.href = "index.html";
+                }
+            </script>
+            <h3 class="text-muted" style="padding-right: 25%;padding-top: 15px">
+                <span id="lblTitle">Prediction of DFU hard-to-heal</span></h3>
+        </div>
+    </div>
+    <div class="container" id="fullpage">
+        <form method="post" action="./" id="form1" style="margin: 0 auto; position: relative" cssclass="form-inline">
+            <div class="aspNetHidden">
+                <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE"
+                       value="ISi722sU1EEjjYDQVIViiAIX51mmyPHcWHnidBHmLWivRI6IjizjE2pLKfYb302UklAVDUX3/IZUaC6jSQg/xoVmj/v2juMXjPpsfZHgZSnScdLvJSm/ge0PiuQUzOSY3qv3jcazENf3zV8dcZluZ/Urs2uVjjlEwkWXdAuxHgIRBgpLyhO/MeZ6bWTA/lLU14IfwVrdewzMHToPoHD3deBm15weIQJykGiTHNfxilc="/>
+            </div>
+
+            <div class="aspNetHidden">
+
+                <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334"/>
+                <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION"
+                       value="NPvprIlBq51G/msjv8tFsjnBm/4ywanoMAa6CAl4GVn2vCWVClykfVrem6brK6TuEJiw7p8zYjQQEiBl0e3OkggoQVds6ClV718LuJ0k7nplLhS308D3md55Sjo0a8F5wT4LqRIaGBmWBnn8FR/2FTGWwJ7Ox2sAzpoer6K8Z9uFiOgEtqqxbpoDYclkum6oKzayHJdx4soZMNLTudyXSLpxft2aotrHgpIwmwq/s6sLdcu/ttQqI1sKC3zDHeHlJ62oaLzolj5Egq2BcvMDB4jgENX3EHmoqoeBDwOH+P+GsBn7gO0VHBlow2a5hXhTaeaUTjuO02n1rAb3Y6nO1A0aIPYxvKZTFUDV1vDysZI="/>
+            </div>
+            <div id="divMain">
+
+                <fieldset style="margin-top: 30px; border:none" id="input1 Parameters">
+                    <div id="divinput1 Parameters">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>个人信息</h3>
+                                <div class="personalInfo">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span class="fieldname">性别</span>
+                                            <input type="hidden" name="input1Gender" value="" id="input1Gender">
+                                            <div class="btn-group" role="group" aria-label="Gender">
+                                                <button type="button" class="btn btn-secondary mr-2" id="femaleGender">
+                                                    女
+                                                </button>
+                                                <button type="button" class="btn btn-secondary" id="maleGender">男
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("femaleGender").addEventListener("click", function () {
+                                                    document.getElementById("input1Gender").value = "0";
+                                                    document.getElementById("femaleGender").classList.add("active");
+                                                    document.getElementById("maleGender").classList.remove("active");
+                                                });
+
+                                                document.getElementById("maleGender").addEventListener("click", function () {
+                                                    document.getElementById("input1Gender").value = "1";
+                                                    document.getElementById("maleGender").classList.add("active");
+                                                    document.getElementById("femaleGender").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Gender").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("femaleGender").classList.add("active");
+                                                        document.getElementById("maleGender").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("maleGender").classList.add("active");
+                                                        document.getElementById("femaleGender").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span id="lblinput1Age" class="fieldname"
+                                                  style="padding-left: 5px">年龄</span>
+                                            <div class="btn-group" role="group" aria-label="Age">
+                                                <input name="input1Age" type="text" value="" id="input1Age"
+                                                       Class="amount form-control form-control-number"
+                                                       style="width: 80%"/>
+                                            </div>
+                                            <script>
+                                            </script>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>既往病史</h3>
+                                <div class="pastMedicalHistory">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span Class="fieldname">当前是否使用胰岛素</span>
+                                            <input type="hidden" name="input1Insulin" value="" id="input1Insulin">
+                                            <div class="btn-group" role="group" aria-label="Insulin">
+                                                <button type="button" class="btn btn-secondary" id="yesInsulin">是
+                                                </button>
+                                                <button type="button" class="btn btn-secondary mr-2" id="noInsulin">
+                                                    否
+                                                </button>
+                                            </div>
+                                            <script>
+                                                document.getElementById("noInsulin").addEventListener("click", function () {
+                                                    document.getElementById("input1Insulin").value = "0";
+                                                    document.getElementById("noInsulin").classList.add("active");
+                                                    document.getElementById("yesInsulin").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesInsulin").addEventListener("click", function () {
+                                                    document.getElementById("input1Insulin").value = "1";
+                                                    document.getElementById("yesInsulin").classList.add("active");
+                                                    document.getElementById("noInsulin").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Insulin").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noInsulin").classList.add("active");
+                                                        document.getElementById("yesInsulin").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesInsulin").classList.add("active");
+                                                        document.getElementById("noInsulin").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <span Class="fieldname">是否有视网膜病变</span>
+                                            <input type="hidden" name="input1Retinopathy" value=""
+                                                   id="input1Retinopathy">
+                                            <div class="btn-group" role="group" aria-label="Retinopathy">
+                                                <button type="button" class="btn btn-secondary" id="yesRetinopathy">是
+                                                </button>
+                                                <button type="button" class="btn btn-secondary mr-2" id="noRetinopathy">
+                                                    否
+                                                </button>
+
+                                            </div>
+                                            <script>
+                                                document.getElementById("noRetinopathy").addEventListener("click", function () {
+                                                    document.getElementById("input1Retinopathy").value = "0";
+                                                    document.getElementById("noRetinopathy").classList.add("active");
+                                                    document.getElementById("yesRetinopathy").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesRetinopathy").addEventListener("click", function () {
+                                                    document.getElementById("input1Retinopathy").value = "1";
+                                                    document.getElementById("yesRetinopathy").classList.add("active");
+                                                    document.getElementById("noRetinopathy").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Retinopathy").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noRetinopathy").classList.add("active");
+                                                        document.getElementById("yesRetinopathy").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesRetinopathy").classList.add("active");
+                                                        document.getElementById("noRetinopathy").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <span Class="fieldname">是否有外周动脉疾病</span>
+                                            <input type="hidden" name="input1Disease" value="" id="input1Disease">
+                                            <div class="btn-group" role="group" aria-label="Disease">
+                                                <button type="button" class="btn btn-secondary" id="yesDisease">是
+                                                </button>
+                                                <button type="button" class="btn btn-secondary mr-2" id="noDisease">
+                                                    否
+                                                </button>
+
+                                            </div>
+                                            <script>
+                                                document.getElementById("noDisease").addEventListener("click", function () {
+                                                    document.getElementById("input1Disease").value = "0";
+                                                    document.getElementById("noDisease").classList.add("active");
+                                                    document.getElementById("yesDisease").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesDisease").addEventListener("click", function () {
+                                                    document.getElementById("input1Disease").value = "1";
+                                                    document.getElementById("yesDisease").classList.add("active");
+                                                    document.getElementById("noDisease").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1Disease").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noDisease").classList.add("active");
+                                                        document.getElementById("yesDisease").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesDisease").classList.add("active");
+                                                        document.getElementById("noDisease").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                        <div class="form-group">
+                                            <span Class="fieldname">是否有吸烟经历</span>
+                                            <input type="hidden" name="input1SmokingHistory" value=""
+                                                   id="input1SmokingHistory">
+                                            <div class="btn-group" role="group" aria-label="SmokingHistory">
+                                                <button type="button" class="btn btn-secondary" id="yesSmokingHistory">
+                                                    是
+                                                </button>
+                                                <button type="button" class="btn btn-secondary mr-2"
+                                                        id="noSmokingHistory">
+                                                    否
+                                                </button>
+
+                                            </div>
+                                            <script>
+                                                document.getElementById("noSmokingHistory").addEventListener("click", function () {
+                                                    document.getElementById("input1SmokingHistory").value = "0";
+                                                    document.getElementById("noSmokingHistory").classList.add("active");
+                                                    document.getElementById("yesSmokingHistory").classList.remove("active");
+                                                });
+
+                                                document.getElementById("yesSmokingHistory").addEventListener("click", function () {
+                                                    document.getElementById("input1SmokingHistory").value = "1";
+                                                    document.getElementById("yesSmokingHistory").classList.add("active");
+                                                    document.getElementById("noSmokingHistory").classList.remove("active");
+                                                });
+
+                                                document.getElementById("input1SmokingHistory").onchange = function (event) {
+                                                    if (event.target.value === "0") {
+                                                        document.getElementById("noSmokingHistory").classList.add("active");
+                                                        document.getElementById("yesSmokingHistory").classList.remove("active");
+                                                    } else if (event.target.value === "1") {
+                                                        document.getElementById("yesSmokingHistory").classList.add("active");
+                                                        document.getElementById("noSmokingHistory").classList.remove("active");
+                                                    }
+                                                };
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h3>DFU Data</h3>
+                                <div class="dfuData">
+                                    <p style="text-align:center;color: #0078D7">You can press enter to switch between
+                                        the inputs.</p>
+                                    <div class="col-lg-6">
+                                        <div class="form-group" style="position: relative;">
+                                            <span id="lblinput1BloodGlucose" class="fieldname"
+                                                  style="padding-left: 5px">Random Blood Glucose(mmol/L)</span>
+                                            <div class="btn-group" role="group" aria-label="BloodGlucose">
+                                                <input name="input1BloodGlucoseDummy" type="text" value=""
+                                                       id="input1BloodGlucoseDummy"
+                                                       class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1AlbuminDummy')"
+                                                       style="width: 80%"/>
+                                                <input type="hidden" name="input1BloodGlucose" value=""
+                                                       id="input1BloodGlucose">
+                                                {#                                                <span id="infoIconGlucose"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                        {% load static %}#}
+                                                {#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                             alt="Information Icon" width="20" height="20"#}
+                                                {#                                                             onmouseover="showTextBoxGlucose()"#}
+                                                {#                                                             onmouseout="hideTextBoxGlucose()">#}
+                                                {#                                                        <div id="floatingTextBoxGlucose" class="dialog-style"#}
+                                                {#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+                                                {#                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line#}
+                                                {#                                                        </div>#}
+                                                {#                                                 </span>#}
+                                            </div>
+                                            <div id="errorTextBloodGlucose"
+                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998; width: 120%"></div>
+                                            <script>
+                                                function moveFocus(event, nextInputId) {
+                                                    if (event.key === "Enter") {
+                                                        event.preventDefault(); // 阻止默认行为（提交表单）
+
+                                                        // 将焦点移到下一个输入框
+                                                        document.getElementById(nextInputId).focus();
+                                                    }
+                                                }
+
+                                                function showTextBoxGlucose() {
+                                                    document.getElementById("floatingTextBoxGlucose").style.display = "block";
+                                                }
+
+                                                function hideTextBoxGlucose() {
+                                                    document.getElementById("floatingTextBoxGlucose").style.display = "none";
+                                                }
+
+                                                document.getElementById("input1BloodGlucoseDummy").addEventListener("change", function () {
+                                                    validateInputGlucose();
+                                                });
+
+                                                function validateInputGlucose() {
+                                                    var inputValue = document.getElementById("input1BloodGlucoseDummy").value.trim();
+                                                    var errorTextBloodGlucose = document.getElementById("errorTextBloodGlucose");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
+                                                        if (inputValue >= 11.1 && inputValue <= 35) {
+                                                            document.getElementById("input1BloodGlucose").value = "0";
+                                                            errorTextBloodGlucose.innerText = "";
+                                                        } else if (inputValue > 0 && inputValue < 11.1) {
+                                                            document.getElementById("input1BloodGlucose").value = "1";
+                                                            errorTextBloodGlucose.innerText = "";
+                                                        } else if (inputValue <= 0) {
+                                                            errorTextBloodGlucose.innerText = "Please enter a positive value";
+                                                        } else {
+                                                            document.getElementById("input1BloodGlucose").value = "0";
+                                                            errorTextBloodGlucose.innerText = "The number is too large, please check if there are any errors";
+                                                        }
+                                                    } else {
+                                                        errorTextBloodGlucose.innerText = "Please enter a valid number";
+                                                    }
+                                                }
+                                            </script>
+
+                                        </div>
+
+
+                                        <div class="form-group" style="position: relative;">
+                                            <span id="lblinput1Albumin" class="fieldname"
+                                                  style="padding-left: 5px">Albumin(g/L)</span>
+                                            <div class="btn-group" role="group" aria-label="Albumin">
+                                                {#                                                <label for="input2">#}
+                                                <input name="input1AlbuminDummy" type="text" value=""
+                                                       id="input1AlbuminDummy"
+                                                       Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1CRPDummy')"
+                                                       style="width: 80%"/>
+                                                <input type="hidden" name="input1Albumin" value=""
+                                                       id="input1Albumin">
+                                                {#                                                <span id="infoIconAlbumin"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxAlbumin()"#}
+                                                {#                                                         onmouseout="hideTextBoxAlbumin()">#}
+                                                {#                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+                                                {#                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
+                                            </div>
+                                            <div id="errorTextAlbumin"
+                                                 style="color: red; position: absolute; top: 100%; left: 0; width: 120%"></div>
+                                            <!-- 错误信息显示区域 -->
+                                            <script>
+                                                function moveFocus(event, nextInputId) {
+                                                    if (event.key === "Enter") {
+                                                        event.preventDefault(); // 阻止默认行为（提交表单）
+
+                                                        // 将焦点移到下一个输入框
+                                                        document.getElementById(nextInputId).focus();
+                                                    }
+                                                }
+
+                                                function showTextBoxAlbumin() {
+                                                    document.getElementById("floatingTextBoxAlbumin").style.display = "block";
+                                                }
+
+                                                function hideTextBoxAlbumin() {
+                                                    document.getElementById("floatingTextBoxAlbumin").style.display = "none";
+                                                }
+
+                                                document.getElementById("input1AlbuminDummy").addEventListener("change", function () {
+                                                    validateInputAlbumin();
+                                                });
+
+                                                function validateInputAlbumin() {
+                                                    var inputValue = document.getElementById("input1AlbuminDummy").value.trim();
+                                                    var errorTextAlbumin = document.getElementById("errorTextAlbumin");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
+                                                        if (inputValue >= 35 && inputValue <= 50) {
+                                                            document.getElementById("input1Albumin").value = "0";
+                                                            document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 25 && inputValue < 35) {
+                                                            document.getElementById("input1Albumin").value = "1";
+                                                            document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue > 0 && inputValue < 25) {
+                                                            document.getElementById("input1Albumin").value = "2";
+                                                            document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue <= 0) {
+                                                            errorTextAlbumin.innerText = "Please enter a positive value";
+                                                        } else {
+                                                            document.getElementById("input1Albumin").value = "0";
+                                                            errorTextAlbumin.innerText = "The number is too large, please check if there are any errors";
+                                                        }
+                                                    } else {
+                                                        errorTextAlbumin.innerText = "Please enter a valid number";
+                                                    }
+                                                }
+                                            </script>
+                                        </div>
+
+                                        <div class="form-group" style="position: relative;">
+                                            <span id="lblinput1CRP" class="fieldname"
+                                                  style="padding-left: 5px">C-Reactive Protein (CRP)(mg/L)</span>
+                                            <div class="btn-group" role="group" aria-label="CRP">
+                                                <input name="input1CRPDummy" type="text" value=""
+                                                       id="input1CRPDummy"
+                                                       Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1WoundAreaDummy')"
+                                                       style="width: 80%"/>
+                                                <input type="hidden" name="input1CRP" value=""
+                                                       id="input1CRP">
+                                                {#                                                <span id="infoIconCRP"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                        {% load static %}#}
+                                                {#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                             alt="Information Icon" width="20" height="20"#}
+                                                {#                                                             onmouseover="showTextBoxCRP()"#}
+                                                {#                                                             onmouseout="hideTextBoxCRP()">#}
+                                                {#                                                        <div id="floatingTextBoxCRP" class="dialog-style"#}
+                                                {#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">#}
+                                                {#                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line#}
+                                                {#                                                        </div>#}
+                                                {#                                                </span>#}
+                                            </div>
+                                            <div id="errorTextCRP"
+                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
+                                            <!-- 错误信息显示区域 -->
+                                            <script>
+                                                function showTextBoxCRP() {
+                                                    document.getElementById("floatingTextBoxCRP").style.display = "block";
+                                                }
+
+                                                function hideTextBoxCRP() {
+                                                    document.getElementById("floatingTextBoxCRP").style.display = "none";
+                                                }
+
+                                                document.getElementById("input1CRPDummy").addEventListener("change", function () {
+                                                    validateInputCRP();
+                                                });
+
+                                                function validateInputCRP() {
+                                                    var inputValue = document.getElementById("input1CRPDummy").value.trim();
+                                                    var errorTextCRP = document.getElementById("errorTextCRP");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
+                                                        if (inputValue >= 8) {
+                                                            document.getElementById("input1CRP").value = "1";
+                                                            document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 0 && inputValue < 8) {
+                                                            document.getElementById("input1CRP").value = "0";
+                                                            document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
+                                                        } else {
+                                                            // 其余数据为错误数据
+                                                            document.getElementById("errorTextCRP").innerText = "Please enter a positive value";
+                                                        }
+                                                    } else {
+                                                        errorTextCRP.innerText = "Please enter a valid number";
+                                                    }
+                                                }
+
+                                            </script>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group" style="position: relative;">
+                                            <span id="lblinput1WoundArea" class="fieldname"
+                                                  style="padding-left: 5px">Wound Area(cm<sup>2</sup>)</span>
+                                            <div class="btn-group" role="group" aria-label="WoundArea">
+                                                <input name="input1WoundAreaDummy" type="text" value=""
+                                                       id="input1WoundAreaDummy"
+                                                       Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1CreatinineDummy')"
+                                                       style="width: 80%"/>
+                                                <input type="hidden" name="input1WoundArea" value=""
+                                                       id="input1WoundArea">
+                                                {#                                                <span id="infoIconWoundArea"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxWoundArea()"#}
+                                                {#                                                         onmouseout="hideTextBoxWoundArea()">#}
+                                                {#                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+                                                {#                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
+                                            </div>
+                                            <div id="errorTextWoundArea"
+                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
+                                            <!-- 错误信息显示区域 -->
+                                            <script>
+                                                function showTextBoxWoundArea() {
+                                                    document.getElementById("floatingTextBoxWoundArea").style.display = "block";
+                                                }
+
+                                                function hideTextBoxWoundArea() {
+                                                    document.getElementById("floatingTextBoxWoundArea").style.display = "none";
+                                                }
+
+                                                document.getElementById("input1WoundAreaDummy").addEventListener("change", function () {
+                                                    validateInputWoundArea();
+                                                });
+
+                                                function validateInputWoundArea() {
+                                                    var inputValue = document.getElementById("input1WoundAreaDummy").value.trim();
+                                                    var errorTextWoundArea = document.getElementById("errorTextWoundArea");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
+                                                        if (inputValue >= 26) {
+                                                            document.getElementById("input1WoundArea").value = "3";
+                                                            document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 17 && inputValue < 26) {
+                                                            document.getElementById("input1WoundArea").value = "2";
+                                                            document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 5 && inputValue < 17) {
+                                                            document.getElementById("input1WoundArea").value = "1";
+                                                            document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 0 && inputValue < 5) {
+                                                            document.getElementById("input1WoundArea").value = "0";
+                                                            document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
+                                                        } else {
+                                                            // 其余数据为错误数据
+                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a positive value";
+                                                        }
+                                                    } else {
+                                                        errorTextWoundArea.innerText = "Please enter a valid number";
+                                                    }
+                                                }
+
+                                            </script>
+                                        </div>
+
+                                        <div class="form-group" style="position: relative;">
+                                            <span id="lblinput1Creatinine" class="fieldname"
+                                                  style="padding-left: 5px">Creatinine(μmol/L)</span>
+                                            <div class="btn-group" role="group" aria-label="Creatinine">
+                                                <input name="input1CreatinineDummy" type="text" value=""
+                                                       id="input1CreatinineDummy"
+                                                       Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1BloodGlucoseDummy')"
+                                                       style="width: 80%"/>
+                                                <input type="hidden" name="input1Creatinine" value=""
+                                                       id="input1Creatinine">
+                                                {#                                                <span id="infoIconCreatinine"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxCreatinine()"#}
+                                                {#                                                         onmouseout="hideTextBoxCreatinine()">#}
+                                                {#                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+                                                {#                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
+                                            </div>
+                                            <div id="errorTextCreatinine"
+                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
+                                            <!-- 错误信息显示区域 -->
+                                            <script>
+                                                function showTextBoxCreatinine() {
+                                                    document.getElementById("floatingTextBoxCreatinine").style.display = "block";
+                                                }
+
+                                                function hideTextBoxCreatinine() {
+                                                    document.getElementById("floatingTextBoxCreatinine").style.display = "none";
+                                                }
+
+                                                document.getElementById("input1CreatinineDummy").addEventListener("change", function () {
+                                                    validateInputCreatinine();
+                                                });
+
+                                                function validateInputCreatinine() {
+                                                    var inputValue = document.getElementById("input1CreatinineDummy").value.trim();
+                                                    var errorTextCreatinine = document.getElementById("errorTextCreatinine");
+
+                                                    var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
+                                                    if (validNumber) {
+                                                        inputValue = parseFloat(inputValue);
+                                                        if (inputValue >= 772) {
+                                                            document.getElementById("input1Creatinine").value = "4";
+                                                            document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 452 && inputValue < 772) {
+                                                            document.getElementById("input1Creatinine").value = "3";
+                                                            document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 187 && inputValue < 452) {
+                                                            document.getElementById("input1Creatinine").value = "2";
+                                                            document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue >= 134 && inputValue < 187) {
+                                                            document.getElementById("input1Creatinine").value = "1";
+                                                            document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue > 0 && inputValue < 134) {
+                                                            document.getElementById("input1Creatinine").value = "0";
+                                                            document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
+                                                        } else {
+                                                            // 其余数据为错误数据
+                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a positive value";
+                                                        }
+                                                    } else {
+                                                        errorTextCreatinine.innerText = "Please enter a valid number";
+                                                    }
+                                                }
+
+
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+                {% csrf_token %}
+                <div id="submitDiv">
+                    <div class="loader-container" id="loaderContainer" style="display: none;">
+                        <div class="loader"></div>
+                    </div>
+                    <input name="btnSubmit" value="Predict" id="btnSubmit"
+                           class="btn btn-primary btnSubmit" action="">
+
+                    <div id="valueError" style="display: none">
+                        <p style="float: right; color: red;">Null value exists!</p>
+                    </div>
+                </div>
+                <script>
+                    function changeCursor(element) {
+                        element.style.cursor = 'pointer'; // 将光标样式设置为手指
+                    }
+
+                    function restoreCursor() {
+                        document.body.style.cursor = 'auto'; // 恢复默认光标样式
+                    }
+
+                    function toggleContent() {
+                        var hiddenDetail = document.getElementById("hiddenDetails");
+                        hiddenDetail.style.height = hiddenDetail.offsetHeight === 0 ? 220 + 'px' : 0 + 'px';
+                    }
+
+                    document.getElementById('btnSubmit').addEventListener('click', function (e) {
+                        e.preventDefault();
+
+                        const _this = document.getElementById('btnSubmit');
+
+                        _this.style.display = 'none';
+                        document.getElementById("valueError").style.display = 'none';
+
+                        const Age = document.getElementById('input1Age').value;
+                        const Sex = document.getElementById('input1Gender').value;
+                        const Use_of_insulin = document.getElementById('input1Insulin').value;
+                        const Random_blood_glucose = document.getElementById('input1BloodGlucose').value;
+                        const CRP = document.getElementById('input1CRP').value;
+                        const Wound_area = document.getElementById('input1WoundArea').value;
+                        const Retinopathy = document.getElementById('input1Retinopathy').value;
+                        const Peripheral_arterial_disease = document.getElementById('input1Disease').value;
+                        const Smoking_history = document.getElementById('input1SmokingHistory').value;
+                        const Albumin = document.getElementById('input1Albumin').value;
+                        const Creatinine = document.getElementById('input1Creatinine').value;
+
+
+                        if (Age === '' || Sex === '' || Use_of_insulin === '' || Random_blood_glucose === '' || CRP === '' || Wound_area === '' || Retinopathy === '' || Peripheral_arterial_disease === '' || Smoking_history === '' || Albumin === '' || Creatinine === '') {
+                            // 如果某个字段为空，则在页面上新增一个提示控件
+                            document.getElementById("valueError").style.display = '';
+                            _this.style.display = '';
+                            return; // 不执行后续的 POST 请求
+                        }
+
+                        // 显示加载动画
+                        const loader = document.getElementById('loaderContainer');
+                        loader.style.display = 'flex';
+
+
+                        // 构造请求的数据
+                        const data = new FormData();
+                        // 添加需要发送的数据
+                        data.append('Age', Age);
+                        data.append('Sex', Sex);
+                        data.append('Use_of_insulin', Use_of_insulin);
+                        data.append('Random_blood_glucose', Random_blood_glucose);
+                        data.append('CRP', CRP);
+                        data.append('Wound_area', Wound_area);
+                        data.append('Retinopathy', Retinopathy);
+                        data.append('Peripheral_arterial_disease', Peripheral_arterial_disease);
+                        data.append('Smoking_history', Smoking_history);
+                        data.append('Albumin', Albumin);
+                        data.append('Creatinine', Creatinine);
+
+
+                        // 发送POST请求
+                        fetch('/predict/', {
+                            method: 'POST',
+                            body: data
+                        })
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (result) {
+                                // 更新label和probability
+                                var popBox = document.getElementById("popupbox");
+                                var popTitle = document.getElementById('popTitle');
+                                var popMain = document.getElementById('popupMain');
+                                var popBtn = document.getElementById("popBtn");
+                                if (result.probability > 0.5) {
+                                    popTitle.style.backgroundColor = "red";
+                                    popBtn.style.backgroundColor = "red";
+                                    popMain.style.borderColor = "red"
+                                }
+
+                                // 控制两个div的显示与隐藏
+                                popBox.style.display = "block";
+                                document.getElementById('label').textContent = result.label;
+                                document.getElementById('probability').textContent = result.probability;
+
+                                loader.style.display = 'none';
+                                _this.style.display = '';
+
+                            });
+                    });
+                </script>
+                <div class="popupbox" id="popupbox">
+                    <div class="main" id="popupMain">
+                        <div class="title" id="popTitle">{{ "RESULT" }}</div>
+                        <div class="content">
+                            <div class="info"
+                                 id="popInfo">{{ "Predictive Hard-to-heal DFU diagnose is: High Risk" }}</div>
+                        </div>
+                        <div class="btn">
+                            <button id="popBtn">确定</button>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+
+                    function closePop() {
+                        // 获取弹出窗口元素
+                        let popDiv = document.getElementById("popDiv");
+
+                        popDiv.style.display = "none";
+                    }
+
+                    export default {
+                        props: {
+                            title: {
+                                type: String,
+                                default: "提示",
+                            },
+                            alertInfo: {
+                                type: String,
+                                default: "提示内容",
+                            },
+                        },
+                    };
+                </script>
+
+                <div id="divResult">
+                    <p class="titleresult">Result</p>
+                    <table class="table table-hover table-bordered">
+                        <tr class="info">
+                            <th>Label</th>
+                            <th>Value</th>
+                            <th>Probability</th>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="background-color: azure">output1</td>
+                        </tr>
+                        <tr>
+                            <td class="textresult">Predictive Hard-to-heal DFU Value is: Results Interpretation: [0]
+                                Means Low Risk of Hard-to-heal DFU . [1] Means High Risk of Hard-to-heal DFU
+                            </td>
+                            <td id="label" style="word-break: break-all;"></td>
+                            <td id="probability" style="word-break: break-all;"></td>
+                        </tr>
+                    </table>
+                    <div id="topLoader"></div>
+                </div>
+
+                <div>
+                    <div style="text-align: center">
+                        <p>Click <span class="underline" onclick="toggleContent()"
+                                       onmouseover="changeCursor(this)"
+                                       onmouseout="restoreCursor()"
+                                       style="text-decoration: underline;color: #0a53be;">here</span> to see detailed
+                            disclaimer</p>
+                    </div>
+
+                    <div id="hiddenDetails" style="overflow: hidden;height:0px;transition: height 0.2s;">
+                        <div id="footer">
+                            <div class="footerText">
+                                <p style="color:green;justify-content:right">Disclaimer: <strong>This website is
+                                    intended to
+                                    be
+                                    used for research purpose only. Authors can not guarantee the accuracy of the
+                                    calculation
+                                    for any particular patient. Any decision about diabetic foot ulcers treatment should
+                                    be
+                                    made
+                                    solely in consultation with a licensed specialist.
+                                </strong></p>
+                            </div>
+                        </div>
+
+
+                        <div id="footer">
+                            <div class="footerText">
+                                <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software
+                                    institute,Nanjing
+                                    University and <strong>Shiqi Wang</strong> at the Medical school,Nanjing University.
+                                    It
+                                    is
+                                    part of a research project. This web tool was trained with patients' data from two
+                                    Chinese
+                                    Grade-IIIA hospitals.</p>
+                            </div>
+                        </div>
+
+                        <div id="footer">
+                            <div class="footerText">
+                                <p style="color:slateblue;justify-content:right">For feedbacks and comments, please
+                                    contact:
+                                    wangshiqi@smail.nju.edu.cn.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /container -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script type="text/javascript" src="/src/Scripts/js/ie10-viewport-bug-workaround.js"></script>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/src/Scripts/wheels.js"></script>

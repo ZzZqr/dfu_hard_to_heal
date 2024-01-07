@@ -9,6 +9,10 @@ def index(request):
 
     return render(request, 'hello_azure/index.html')
 
+def language(request):
+
+    return render(request, 'hello_azure/index_CN.html')
+
 
 @csrf_exempt
 def predict(request):

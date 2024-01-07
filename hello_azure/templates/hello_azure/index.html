@@ -234,8 +234,20 @@
                 <wheel></wheel>
             </div>
         </a>
-        <div style="max-height: 110px; overflow-y: hidden; width:110%">
-            <h3 class="text-muted" style="padding-right: 400px;padding-top: 25px">
+        <div style="max-height: 110px; overflow-y: hidden; width:100%">
+            <div style="text-align: right">
+                <span class="underline" onclick="redirect()"
+                      onmouseover="changeCursor(this)"
+                      onmouseout="restoreCursor()"
+                      style="text-decoration: underline;color: white;text-align: right">中文</span>
+            </div>
+            <script>
+                function redirect() {
+                    // 使用 window.location.href 实现页面跳转
+                    window.location.href = "index_CN.html";
+                }
+            </script>
+            <h3 class="text-muted" style="padding-right: 25%;padding-top: 15px">
                 <span id="lblTitle">Prediction of DFU hard-to-heal</span></h3>
         </div>
     </div>
@@ -877,7 +889,7 @@
 
                     function toggleContent() {
                         var hiddenDetail = document.getElementById("hiddenDetails");
-                        hiddenDetail.style.height = hiddenDetail.offsetHeight === 0 ? 220 + 'px' : 00 + 'px';
+                        hiddenDetail.style.height = hiddenDetail.offsetHeight === 0 ? 220 + 'px' : 0 + 'px';
                     }
 
                     document.getElementById('btnSubmit').addEventListener('click', function (e) {
