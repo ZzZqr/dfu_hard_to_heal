@@ -7,6 +7,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="Azure Machine Learning Web Service"/>
     <meta name="author"/>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'images/imageonline-co-pngtoicoimage.ico' %}"/>
     <title>
         Prediction of hard to heal
     </title>
@@ -36,9 +38,115 @@
         });
     </script>
 
+    <script>
+        export default {
+            props: {
+                title: {
+                    type: String,
+                    default: "提示",
+                },
+                alertInfo: {
+                    type: String,
+                    default: "提示内容",
+                },
+            },
+        };
+    </script>
+
+    <style>
+        .loader-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .popupbox {
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+            /* 为防止页面中有其他定位元素的z-index较大，可以将这里的z-index设置的得大一些 */
+            background-color: rgba(0, 0, 0, .5);
+            /* opacity: 0.5; */
+        }
+
+        .popupbox .main {
+            position: absolute;
+            width: 560px;
+            height: 300px;
+            top: 150px;
+            left: 50%;
+            margin-left: -280px;
+            background-color: white;
+            border-radius: 25px;
+            border-style: solid;
+            border-color: #2c3f7c;
+            border-width: 10px;
+        }
+
+        .main .title {
+            height: 60px;
+            background-color: #2c3f7c;
+            color: white;
+            line-height: 35px;
+            border-radius: 10px 10px 0 0;
+            font-size: 40px;
+            padding-left: 10px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .main .content {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            font-size: 20px;
+            font-weight: bold;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main .btn {
+            width: 100%;
+        }
+
+        .btn button {
+            float: right;
+            margin-left: 100px;
+            margin-bottom: 1px;
+            background-color: #2c3f7c;
+            outline: none;
+            color: white;
+            border: none;
+            padding: 3px 12px;
+            border-radius: 5px;
+        }
+    </style>
+
     <style>
         /* CSS样式代码 */
-
         .btn-group {
             display: inline-flex;
         }
@@ -62,6 +170,12 @@
             background-color: #337ab7;
             color: white;
             border-color: white;
+        }
+
+        #btnSubmit {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
     </style>
 
@@ -112,16 +226,17 @@
 </head>
 <body onresize="updateResize()">
 <div class="container azue-header">
+    {% load static %}
     <div class="jumbotron azue-header"
-         style="background-image: url('Resources/azure-ml.png'); height: 126px; position: relative; padding-top: 10px;">
+         style="background-image: url({% static '' %}); height: 126px; position: relative; padding-top: 10px;">
         <a href="/">
             <div class="wheel">
                 <wheel></wheel>
             </div>
         </a>
-        <div style="max-height: 110px; overflow-y: hidden">
-            <h3 class="text-muted" style="padding-right: 400px;padding-top: 25px;">
-                <span id="lblTitle">Prediction of hard to heal</span></h3>
+        <div style="max-height: 110px; overflow-y: hidden; width:110%">
+            <h3 class="text-muted" style="padding-right: 400px;padding-top: 25px">
+                <span id="lblTitle">Prediction of DFU hard-to-heal</span></h3>
         </div>
     </div>
     <div class="container" id="fullpage">
@@ -374,21 +489,21 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
-                                                <span id="infoIconGlucose"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                        {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}"
-                                                             alt="Information Icon" width="20" height="20"
-                                                             onmouseover="showTextBoxGlucose()"
-                                                             onmouseout="hideTextBoxGlucose()">
-                                                        <div id="floatingTextBoxGlucose" class="dialog-style"
-                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
-                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line
-                                                        </div>
-                                                 </span>
+                                                {#                                                <span id="infoIconGlucose"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                        {% load static %}#}
+                                                {#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                             alt="Information Icon" width="20" height="20"#}
+                                                {#                                                             onmouseover="showTextBoxGlucose()"#}
+                                                {#                                                             onmouseout="hideTextBoxGlucose()">#}
+                                                {#                                                        <div id="floatingTextBoxGlucose" class="dialog-style"#}
+                                                {#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+                                                {#                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line#}
+                                                {#                                                        </div>#}
+                                                {#                                                 </span>#}
                                             </div>
                                             <div id="errorTextBloodGlucose"
-                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998;"></div>
+                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998; width: 120%"></div>
                                             <script>
                                                 function moveFocus(event, nextInputId) {
                                                     if (event.key === "Enter") {
@@ -418,14 +533,17 @@
                                                     var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
                                                     if (validNumber) {
                                                         inputValue = parseFloat(inputValue);
-                                                        if (inputValue >= 11.1) {
+                                                        if (inputValue >= 11.1 && inputValue <= 35) {
                                                             document.getElementById("input1BloodGlucose").value = "0";
                                                             errorTextBloodGlucose.innerText = "";
                                                         } else if (inputValue > 0 && inputValue < 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "1";
                                                             errorTextBloodGlucose.innerText = "";
+                                                        } else if (inputValue <= 0) {
+                                                            errorTextBloodGlucose.innerText = "Please enter a positive value";
                                                         } else {
-                                                            errorTextBloodGlucose.innerText = "Please enter a valid value";
+                                                            document.getElementById("input1BloodGlucose").value = "0";
+                                                            errorTextBloodGlucose.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
                                                         errorTextBloodGlucose.innerText = "Please enter a valid number";
@@ -448,22 +566,21 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
-                                                <span id="infoIconAlbumin"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxAlbumin()"
-                                                         onmouseout="hideTextBoxAlbumin()">
-                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
-                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
-                                                    </div>
-                                                    </span>
-                                                {#                                                </label>#}
+                                                {#                                                <span id="infoIconAlbumin"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxAlbumin()"#}
+                                                {#                                                         onmouseout="hideTextBoxAlbumin()">#}
+                                                {#                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+                                                {#                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
                                             </div>
                                             <div id="errorTextAlbumin"
-                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
+                                                 style="color: red; position: absolute; top: 100%; left: 0; width: 120%"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
                                                 function moveFocus(event, nextInputId) {
@@ -494,7 +611,7 @@
                                                     var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
                                                     if (validNumber) {
                                                         inputValue = parseFloat(inputValue);
-                                                        if (inputValue >= 35 && inputValue < 50) {
+                                                        if (inputValue >= 35 && inputValue <= 50) {
                                                             document.getElementById("input1Albumin").value = "0";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
                                                         } else if (inputValue >= 25 && inputValue < 35) {
@@ -503,9 +620,11 @@
                                                         } else if (inputValue > 0 && inputValue < 25) {
                                                             document.getElementById("input1Albumin").value = "2";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
+                                                        } else if (inputValue <= 0) {
+                                                            errorTextAlbumin.innerText = "Please enter a positive value";
                                                         } else {
-                                                            // 其余数据为错误数据
-                                                            document.getElementById("errorTextAlbumin").innerText = "Please enter a valid value";
+                                                            document.getElementById("input1Albumin").value = "0";
+                                                            errorTextAlbumin.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
                                                         errorTextAlbumin.innerText = "Please enter a valid number";
@@ -525,18 +644,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
-                                                <span id="infoIconCRP"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                        {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}"
-                                                             alt="Information Icon" width="20" height="20"
-                                                             onmouseover="showTextBoxCRP()"
-                                                             onmouseout="hideTextBoxCRP()">
-                                                        <div id="floatingTextBoxCRP" class="dialog-style"
-                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
-                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line
-                                                        </div>
-                                                </span>
+                                                {#                                                <span id="infoIconCRP"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                        {% load static %}#}
+                                                {#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                             alt="Information Icon" width="20" height="20"#}
+                                                {#                                                             onmouseover="showTextBoxCRP()"#}
+                                                {#                                                             onmouseout="hideTextBoxCRP()">#}
+                                                {#                                                        <div id="floatingTextBoxCRP" class="dialog-style"#}
+                                                {#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">#}
+                                                {#                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line#}
+                                                {#                                                        </div>#}
+                                                {#                                                </span>#}
                                             </div>
                                             <div id="errorTextCRP"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -569,7 +688,7 @@
                                                             document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCRP").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextCRP").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextCRP.innerText = "Please enter a valid number";
@@ -594,18 +713,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
-                                                <span id="infoIconWoundArea"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxWoundArea()"
-                                                         onmouseout="hideTextBoxWoundArea()">
-                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
-                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line
-                                                    </div>
-                                                </span>
+                                                {#                                                <span id="infoIconWoundArea"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxWoundArea()"#}
+                                                {#                                                         onmouseout="hideTextBoxWoundArea()">#}
+                                                {#                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+                                                {#                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
                                             </div>
                                             <div id="errorTextWoundArea"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -644,7 +763,7 @@
                                                             document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextWoundArea.innerText = "Please enter a valid number";
@@ -665,18 +784,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Creatinine" value=""
                                                        id="input1Creatinine">
-                                                <span id="infoIconCreatinine"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxCreatinine()"
-                                                         onmouseout="hideTextBoxCreatinine()">
-                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
-                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line
-                                                    </div>
-                                                </span>
+                                                {#                                                <span id="infoIconCreatinine"#}
+                                                {#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+                                                {#                                                    {% load static %}#}
+                                                {#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+                                                {#                                                         alt="Information Icon" width="20" height="20"#}
+                                                {#                                                         onmouseover="showTextBoxCreatinine()"#}
+                                                {#                                                         onmouseout="hideTextBoxCreatinine()">#}
+                                                {#                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"#}
+                                                {#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+                                                {#                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line#}
+                                                {#                                                    </div>#}
+                                                {#                                                </span>#}
                                             </div>
                                             <div id="errorTextCreatinine"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -708,17 +827,17 @@
                                                             document.getElementById("input1Creatinine").value = "3";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else if (inputValue >= 187 && inputValue < 452) {
-                                                            document.getElementById("input1Creatinine").value = "3";
+                                                            document.getElementById("input1Creatinine").value = "2";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else if (inputValue >= 134 && inputValue < 187) {
-                                                            document.getElementById("input1Creatinine").value = "3";
+                                                            document.getElementById("input1Creatinine").value = "1";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
-                                                        } else if (inputValue >= 54 && inputValue < 134) {
-                                                            document.getElementById("input1Creatinine").value = "3";
+                                                        } else if (inputValue > 0 && inputValue < 134) {
+                                                            document.getElementById("input1Creatinine").value = "0";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextCreatinine.innerText = "Please enter a valid number";
@@ -737,8 +856,15 @@
                 </fieldset>
                 {% csrf_token %}
                 <div id="submitDiv">
+                    <div class="loader-container" id="loaderContainer" style="display: none;">
+                        <div class="loader"></div>
+                    </div>
                     <input name="btnSubmit" value="Predict" id="btnSubmit"
                            class="btn btn-primary btnSubmit" action="">
+
+                    <div id="valueError" style="display: none">
+                        <p style="float: right; color: red;">Null value exists!</p>
+                    </div>
                 </div>
                 <script>
                     function changeCursor(element) {
@@ -757,6 +883,11 @@
                     document.getElementById('btnSubmit').addEventListener('click', function (e) {
                         e.preventDefault();
 
+                        const _this = document.getElementById('btnSubmit');
+
+                        _this.style.display = 'none';
+                        document.getElementById("valueError").style.display = 'none';
+
                         const Age = document.getElementById('input1Age').value;
                         const Sex = document.getElementById('input1Gender').value;
                         const Use_of_insulin = document.getElementById('input1Insulin').value;
@@ -772,11 +903,14 @@
 
                         if (Age === '' || Sex === '' || Use_of_insulin === '' || Random_blood_glucose === '' || CRP === '' || Wound_area === '' || Retinopathy === '' || Peripheral_arterial_disease === '' || Smoking_history === '' || Albumin === '' || Creatinine === '') {
                             // 如果某个字段为空，则在页面上新增一个提示控件
-                            const errorMessage = document.createElement('p');
-                            errorMessage.textContent = '某个值为空，请填写完整';
-                            document.getElementById('submitDiv').insertAdjacentElement('afterend', errorMessage);
+                            document.getElementById("valueError").style.display = '';
+                            _this.style.display = '';
                             return; // 不执行后续的 POST 请求
                         }
+
+                        // 显示加载动画
+                        const loader = document.getElementById('loaderContainer');
+                        loader.style.display = 'flex';
 
 
                         // 构造请求的数据
@@ -805,12 +939,62 @@
                             })
                             .then(function (result) {
                                 // 更新label和probability
+                                var popBox = document.getElementById("popupbox");
+                                var popTitle = document.getElementById('popTitle');
+                                var popMain = document.getElementById('popupMain');
+                                var popBtn = document.getElementById("popBtn");
+                                if (result.probability > 0.5) {
+                                    popTitle.style.backgroundColor = "red";
+                                    popBtn.style.backgroundColor = "red";
+                                    popMain.style.borderColor = "red"
+                                }
+
+                                // 控制两个div的显示与隐藏
+                                popBox.style.display = "block";
                                 document.getElementById('label').textContent = result.label;
                                 document.getElementById('probability').textContent = result.probability;
+
+                                loader.style.display = 'none';
+                                _this.style.display = '';
+
                             });
                     });
                 </script>
+                <div class="popupbox" id="popupbox">
+                    <div class="main" id="popupMain">
+                        <div class="title" id="popTitle">{{ "RESULT" }}</div>
+                        <div class="content">
+                            <div class="info"
+                                 id="popInfo">{{ "Predictive Hard-to-heal DFU diagnose is: High Risk" }}</div>
+                        </div>
+                        <div class="btn">
+                            <button id="popBtn">确定</button>
+                        </div>
+                    </div>
+                </div>
 
+                <script>
+
+                    function closePop() {
+                        // 获取弹出窗口元素
+                        let popDiv = document.getElementById("popDiv");
+
+                        popDiv.style.display = "none";
+                    }
+
+                    export default {
+                        props: {
+                            title: {
+                                type: String,
+                                default: "提示",
+                            },
+                            alertInfo: {
+                                type: String,
+                                default: "提示内容",
+                            },
+                        },
+                    };
+                </script>
 
                 <div id="divResult">
                     <p class="titleresult">Result</p>
