@@ -943,10 +943,32 @@
                                 var popTitle = document.getElementById('popTitle');
                                 var popMain = document.getElementById('popupMain');
                                 var popBtn = document.getElementById("popBtn");
-                                if (result.probability > 0.5) {
+                                var popInfo = document.getElementById("popInfo");
+                                if (result.probability >= 0.9) {
                                     popTitle.style.backgroundColor = "red";
                                     popBtn.style.backgroundColor = "red";
                                     popMain.style.borderColor = "red"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very High Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability >= 0.6) {
+                                    popTitle.style.backgroundColor = "#FF4500";
+                                    popBtn.style.backgroundColor = "#FF4500";
+                                    popMain.style.borderColor = "#FF4500"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: High Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability > 0.3) {
+                                    popTitle.style.backgroundColor = "#FFD700";
+                                    popBtn.style.backgroundColor = "#FFD700";
+                                    popMain.style.borderColor = "#FFD700";
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Medium Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability > 0.1) {
+                                    popTitle.style.backgroundColor = "#7FFF00";
+                                    popBtn.style.backgroundColor = "#7FFF00";
+                                    popMain.style.borderColor = "#7FFF00"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Low Risk\nPredict Probability: " + result.probability;
+                                } else {
+                                    popTitle.style.backgroundColor = "green";
+                                    popBtn.style.backgroundColor = "green";
+                                    popMain.style.borderColor = "green";
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very Low Risk\nPredict Probability: " + result.probability;
                                 }
 
                                 // 控制两个div的显示与隐藏
@@ -965,7 +987,7 @@
                         <div class="title" id="popTitle">{{ "RESULT" }}</div>
                         <div class="content">
                             <div class="info"
-                                 id="popInfo">{{ "Predictive Hard-to-heal DFU diagnose is: High Risk" }}</div>
+                                 id="popInfo">{{ "" }}</div>
                         </div>
                         <div class="btn">
                             <button id="popBtn">确定</button>
@@ -981,41 +1003,21 @@
 
                         popDiv.style.display = "none";
                     }
-
-                    export default {
-                        props: {
-                            title: {
-                                type: String,
-                                default: "提示",
-                            },
-                            alertInfo: {
-                                type: String,
-                                default: "提示内容",
-                            },
-                        },
-                    };
                 </script>
 
-                <div id="divResult">
-                    <p class="titleresult">Result</p>
-                    <table class="table table-hover table-bordered">
-                        <tr class="info">
-                            <th>Label</th>
-                            <th>Value</th>
-                            <th>Probability</th>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="background-color: azure">output1</td>
-                        </tr>
-                        <tr>
-                            <td class="textresult">Predictive Hard-to-heal DFU Value is: Results Interpretation: [0]
-                                Means Low Risk of Hard-to-heal DFU . [1] Means High Risk of Hard-to-heal DFU
-                            </td>
-                            <td id="label" style="word-break: break-all;"></td>
-                            <td id="probability" style="word-break: break-all;"></td>
-                        </tr>
-                    </table>
-                    <div id="topLoader"></div>
+                <div id="footer" style="padding: 20px; padding-top: 50px">
+                    <div class="footerText">
+                        <p style="color:slateblue;justify-content:right">Disclaimer: <strong>This website is
+                            intended to
+                            be
+                            used for research purpose only. Authors can not guarantee the accuracy of the
+                            calculation
+                            for any particular patient. Any decision about diabetic foot ulcers treatment should
+                            be
+                            made
+                            solely in consultation with a licensed specialist.
+                        </strong></p>
+                    </div>
                 </div>
 
                 <div>
@@ -1028,23 +1030,7 @@
                     </div>
 
                     <div id="hiddenDetails" style="overflow: hidden;height:0px;transition: height 0.2s;">
-                        <div id="footer">
-                            <div class="footerText">
-                                <p style="color:green;justify-content:right">Disclaimer: <strong>This website is
-                                    intended to
-                                    be
-                                    used for research purpose only. Authors can not guarantee the accuracy of the
-                                    calculation
-                                    for any particular patient. Any decision about diabetic foot ulcers treatment should
-                                    be
-                                    made
-                                    solely in consultation with a licensed specialist.
-                                </strong></p>
-                            </div>
-                        </div>
-
-
-                        <div id="footer">
+                        <div id="footer" style="padding: 20px">
                             <div class="footerText">
                                 <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software
                                     institute,Nanjing
@@ -1057,9 +1043,9 @@
                             </div>
                         </div>
 
-                        <div id="footer">
+                        <div id="footer" style="padding: 20px">
                             <div class="footerText">
-                                <p style="color:slateblue;justify-content:right">For feedbacks and comments, please
+                                <p style="color:green;justify-content:right">For feedbacks and comments, please
                                     contact:
                                     wangshiqi@smail.nju.edu.cn.</p>
                             </div>
