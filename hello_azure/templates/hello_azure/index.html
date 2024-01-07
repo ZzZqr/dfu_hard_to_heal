@@ -405,21 +405,21 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
-                                                <span id="infoIconGlucose"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                        {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}"
-                                                             alt="Information Icon" width="20" height="20"
-                                                             onmouseover="showTextBoxGlucose()"
-                                                             onmouseout="hideTextBoxGlucose()">
-                                                        <div id="floatingTextBoxGlucose" class="dialog-style"
-                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
-                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line
-                                                        </div>
-                                                 </span>
+{#                                                <span id="infoIconGlucose"#}
+{#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+{#                                                        {% load static %}#}
+{#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+{#                                                             alt="Information Icon" width="20" height="20"#}
+{#                                                             onmouseover="showTextBoxGlucose()"#}
+{#                                                             onmouseout="hideTextBoxGlucose()">#}
+{#                                                        <div id="floatingTextBoxGlucose" class="dialog-style"#}
+{#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+{#                                                            Random Blood Glucose should be a number greater than 0. <br>Medically using 11.1mmol/L as the cut-off line#}
+{#                                                        </div>#}
+{#                                                 </span>#}
                                             </div>
                                             <div id="errorTextBloodGlucose"
-                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998;"></div>
+                                                 style="color: red; position: absolute; top: 100%; left: 0; z-index: 998; width: 120%"></div>
                                             <script>
                                                 function showTextBoxGlucose() {
                                                     document.getElementById("floatingTextBoxGlucose").style.display = "block";
@@ -440,14 +440,17 @@
                                                     var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
                                                     if (validNumber) {
                                                         inputValue = parseFloat(inputValue);
-                                                        if (inputValue >= 11.1) {
+                                                        if (inputValue >= 11.1 && inputValue <= 35) {
                                                             document.getElementById("input1BloodGlucose").value = "0";
                                                             errorTextBloodGlucose.innerText = "";
                                                         } else if (inputValue > 0 && inputValue < 11.1) {
                                                             document.getElementById("input1BloodGlucose").value = "1";
                                                             errorTextBloodGlucose.innerText = "";
-                                                        } else {
-                                                            errorTextBloodGlucose.innerText = "Please enter a valid value";
+                                                        } else if (inputValue <= 0){
+                                                            errorTextBloodGlucose.innerText = "Please enter a positive value";
+                                                        } else{
+                                                            document.getElementById("input1BloodGlucose").value = "0";
+                                                            errorTextBloodGlucose.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
                                                         errorTextBloodGlucose.innerText = "Please enter a valid number";
@@ -468,21 +471,21 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
-                                                <span id="infoIconAlbumin"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxAlbumin()"
-                                                         onmouseout="hideTextBoxAlbumin()">
-                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
-                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
-                                                    </div>
-                                                </span>
+{#                                                <span id="infoIconAlbumin"#}
+{#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+{#                                                    {% load static %}#}
+{#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+{#                                                         alt="Information Icon" width="20" height="20"#}
+{#                                                         onmouseover="showTextBoxAlbumin()"#}
+{#                                                         onmouseout="hideTextBoxAlbumin()">#}
+{#                                                    <div id="floatingTextBoxAlbumin" class="dialog-style"#}
+{#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">#}
+{#                                                        Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line#}
+{#                                                    </div>#}
+{#                                                </span>#}
                                             </div>
                                             <div id="errorTextAlbumin"
-                                                 style="color: red; position: absolute; top: 100%; left: 0;"></div>
+                                                 style="color: red; position: absolute; top: 100%; left: 0; width: 120%"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
                                                 function showTextBoxAlbumin() {
@@ -504,7 +507,7 @@
                                                     var validNumber = /^\d+(\.\d+)?$/.test(inputValue);
                                                     if (validNumber) {
                                                         inputValue = parseFloat(inputValue);
-                                                        if (inputValue >= 35 && inputValue < 50) {
+                                                        if (inputValue >= 35 && inputValue <= 50) {
                                                             document.getElementById("input1Albumin").value = "0";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
                                                         } else if (inputValue >= 25 && inputValue < 35) {
@@ -513,9 +516,11 @@
                                                         } else if (inputValue > 0 && inputValue < 25) {
                                                             document.getElementById("input1Albumin").value = "2";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
-                                                        } else {
-                                                            // 其余数据为错误数据
-                                                            document.getElementById("errorTextAlbumin").innerText = "Please enter a valid value";
+                                                        } else if (inputValue <= 0){
+                                                            errorTextAlbumin.innerText = "Please enter a positive value";
+                                                        } else{
+                                                            document.getElementById("input1Albumin").value = "0";
+                                                            errorTextAlbumin.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
                                                         errorTextAlbumin.innerText = "Please enter a valid number";
@@ -534,18 +539,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
-                                                <span id="infoIconCRP"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                        {% load static %}
-                                                        <img src="{% static 'images/question_mark.png' %}"
-                                                             alt="Information Icon" width="20" height="20"
-                                                             onmouseover="showTextBoxCRP()"
-                                                             onmouseout="hideTextBoxCRP()">
-                                                        <div id="floatingTextBoxCRP" class="dialog-style"
-                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">
-                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line
-                                                        </div>
-                                                </span>
+{#                                                <span id="infoIconCRP"#}
+{#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+{#                                                        {% load static %}#}
+{#                                                        <img src="{% static 'images/question_mark.png' %}"#}
+{#                                                             alt="Information Icon" width="20" height="20"#}
+{#                                                             onmouseover="showTextBoxCRP()"#}
+{#                                                             onmouseout="hideTextBoxCRP()">#}
+{#                                                        <div id="floatingTextBoxCRP" class="dialog-style"#}
+{#                                                             style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: 50px;top: -10px">#}
+{#                                                        C-Reactive Protein (CRP) should be a number greater than 0. <br>Medically using 8mg/L as the cut-off line#}
+{#                                                        </div>#}
+{#                                                </span>#}
                                             </div>
                                             <div id="errorTextCRP"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -578,7 +583,7 @@
                                                             document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCRP").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextCRP").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextCRP.innerText = "Please enter a valid number";
@@ -602,18 +607,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
-                                                <span id="infoIconWoundArea"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxWoundArea()"
-                                                         onmouseout="hideTextBoxWoundArea()">
-                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
-                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line
-                                                    </div>
-                                                </span>
+{#                                                <span id="infoIconWoundArea"#}
+{#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+{#                                                    {% load static %}#}
+{#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+{#                                                         alt="Information Icon" width="20" height="20"#}
+{#                                                         onmouseover="showTextBoxWoundArea()"#}
+{#                                                         onmouseout="hideTextBoxWoundArea()">#}
+{#                                                    <div id="floatingTextBoxWoundArea" class="dialog-style"#}
+{#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+{#                                                    Wound Area Glucose should be a number greater than 0. <br>Medically using 26, 17, 5cm<sup>2</sup> as the cut-off line#}
+{#                                                    </div>#}
+{#                                                </span>#}
                                             </div>
                                             <div id="errorTextWoundArea"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -652,7 +657,7 @@
                                                             document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextWoundArea.innerText = "Please enter a valid number";
@@ -672,18 +677,18 @@
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Creatinine" value=""
                                                        id="input1Creatinine">
-                                                <span id="infoIconCreatinine"
-                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">
-                                                    {% load static %}
-                                                    <img src="{% static 'images/question_mark.png' %}"
-                                                         alt="Information Icon" width="20" height="20"
-                                                         onmouseover="showTextBoxCreatinine()"
-                                                         onmouseout="hideTextBoxCreatinine()">
-                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"
-                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">
-                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line
-                                                    </div>
-                                                </span>
+{#                                                <span id="infoIconCreatinine"#}
+{#                                                      style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); z-index: 999;">#}
+{#                                                    {% load static %}#}
+{#                                                    <img src="{% static 'images/question_mark.png' %}"#}
+{#                                                         alt="Information Icon" width="20" height="20"#}
+{#                                                         onmouseover="showTextBoxCreatinine()"#}
+{#                                                         onmouseout="hideTextBoxCreatinine()">#}
+{#                                                    <div id="floatingTextBoxCreatinine" class="dialog-style"#}
+{#                                                         style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;left: -200px;">#}
+{#                                                    Creatinine should be a number greater than 0. <br>Medically using 772, 452, 187, 134, 54μmol/L as the cut-off line#}
+{#                                                    </div>#}
+{#                                                </span>#}
                                             </div>
                                             <div id="errorTextCreatinine"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
@@ -725,7 +730,7 @@
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a valid value";
+                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
                                                         errorTextCreatinine.innerText = "Please enter a valid number";
