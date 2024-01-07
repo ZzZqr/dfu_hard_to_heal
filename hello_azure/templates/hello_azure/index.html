@@ -38,6 +38,7 @@
 
     <style>
         /* CSS样式代码 */
+
         .btn-group {
             display: inline-flex;
         }
@@ -359,9 +360,9 @@
                             <div class="col-lg-12">
                                 <h3>DFU Data</h3>
                                 <div class="dfuData">
-
+                                    <p style="text-align:center;color: #0078D7">You can press enter to switch between
+                                        the inputs.</p>
                                     <div class="col-lg-6">
-
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1BloodGlucose" class="fieldname"
                                                   style="padding-left: 5px">Random Blood Glucose(mmol/L)</span>
@@ -369,6 +370,7 @@
                                                 <input name="input1BloodGlucoseDummy" type="text" value=""
                                                        id="input1BloodGlucoseDummy"
                                                        class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1AlbuminDummy')"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1BloodGlucose" value=""
                                                        id="input1BloodGlucose">
@@ -388,6 +390,15 @@
                                             <div id="errorTextBloodGlucose"
                                                  style="color: red; position: absolute; top: 100%; left: 0; z-index: 998;"></div>
                                             <script>
+                                                function moveFocus(event, nextInputId) {
+                                                    if (event.key === "Enter") {
+                                                        event.preventDefault(); // 阻止默认行为（提交表单）
+
+                                                        // 将焦点移到下一个输入框
+                                                        document.getElementById(nextInputId).focus();
+                                                    }
+                                                }
+
                                                 function showTextBoxGlucose() {
                                                     document.getElementById("floatingTextBoxGlucose").style.display = "block";
                                                 }
@@ -429,9 +440,11 @@
                                             <span id="lblinput1Albumin" class="fieldname"
                                                   style="padding-left: 5px">Albumin(g/L)</span>
                                             <div class="btn-group" role="group" aria-label="Albumin">
+                                                {#                                                <label for="input2">#}
                                                 <input name="input1AlbuminDummy" type="text" value=""
                                                        id="input1AlbuminDummy"
                                                        Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1CRPDummy')"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Albumin" value=""
                                                        id="input1Albumin">
@@ -446,12 +459,22 @@
                                                          style="display: none; position: absolute; width: 400px; height: 50px; background-color: #ccc; border-radius: 10px; border: 1px solid #999; z-index: 1000; text-align: center;">
                                                         Albumin should be a number greater than 0 but less than 50. <br>Medically using 35g/L as the cut-off line
                                                     </div>
-                                                </span>
+                                                    </span>
+                                                {#                                                </label>#}
                                             </div>
                                             <div id="errorTextAlbumin"
                                                  style="color: red; position: absolute; top: 100%; left: 0;"></div>
                                             <!-- 错误信息显示区域 -->
                                             <script>
+                                                function moveFocus(event, nextInputId) {
+                                                    if (event.key === "Enter") {
+                                                        event.preventDefault(); // 阻止默认行为（提交表单）
+
+                                                        // 将焦点移到下一个输入框
+                                                        document.getElementById(nextInputId).focus();
+                                                    }
+                                                }
+
                                                 function showTextBoxAlbumin() {
                                                     document.getElementById("floatingTextBoxAlbumin").style.display = "block";
                                                 }
@@ -498,6 +521,7 @@
                                                 <input name="input1CRPDummy" type="text" value=""
                                                        id="input1CRPDummy"
                                                        Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1WoundAreaDummy')"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1CRP" value=""
                                                        id="input1CRP">
@@ -566,6 +590,7 @@
                                                 <input name="input1WoundAreaDummy" type="text" value=""
                                                        id="input1WoundAreaDummy"
                                                        Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1CreatinineDummy')"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1WoundArea" value=""
                                                        id="input1WoundArea">
@@ -636,6 +661,7 @@
                                                 <input name="input1CreatinineDummy" type="text" value=""
                                                        id="input1CreatinineDummy"
                                                        Class="amount form-control form-control-number"
+                                                       onkeydown="moveFocus(event, 'input1BloodGlucoseDummy')"
                                                        style="width: 80%"/>
                                                 <input type="hidden" name="input1Creatinine" value=""
                                                        id="input1Creatinine">
@@ -715,6 +741,19 @@
                            class="btn btn-primary btnSubmit" action="">
                 </div>
                 <script>
+                    function changeCursor(element) {
+                        element.style.cursor = 'pointer'; // 将光标样式设置为手指
+                    }
+
+                    function restoreCursor() {
+                        document.body.style.cursor = 'auto'; // 恢复默认光标样式
+                    }
+
+                    function toggleContent() {
+                        var hiddenDetail = document.getElementById("hiddenDetails");
+                        hiddenDetail.style.height = hiddenDetail.offsetHeight === 0 ? 220 + 'px' : 00 + 'px';
+                    }
+
                     document.getElementById('btnSubmit').addEventListener('click', function (e) {
                         e.preventDefault();
 
@@ -795,35 +834,53 @@
                     <div id="topLoader"></div>
                 </div>
 
-                <div id="footer">
-                    <div class="footerText">
-                        <p style="color:green;justify-content:right">Disclaimer: <strong>This website is intended to be
-                            used for research purpose only. Authors can not guarantee the accuracy of the calculation
-                            for any particular patient. Any decision about diabetic foot ulcers treatment should be made
-                            solely in consultation with a licensed specialist.
-                        </strong></p>
+                <div>
+                    <div style="text-align: center">
+                        <p>Click <span class="underline" onclick="toggleContent()"
+                                       onmouseover="changeCursor(this)"
+                                       onmouseout="restoreCursor()"
+                                       style="text-decoration: underline;color: #0a53be;">here</span> to see detailed
+                            disclaimer</p>
                     </div>
 
-                </div>
+                    <div id="hiddenDetails" style="overflow: hidden;height:0px;transition: height 0.2s;">
+                        <div id="footer">
+                            <div class="footerText">
+                                <p style="color:green;justify-content:right">Disclaimer: <strong>This website is
+                                    intended to
+                                    be
+                                    used for research purpose only. Authors can not guarantee the accuracy of the
+                                    calculation
+                                    for any particular patient. Any decision about diabetic foot ulcers treatment should
+                                    be
+                                    made
+                                    solely in consultation with a licensed specialist.
+                                </strong></p>
+                            </div>
+                        </div>
 
 
-                <div id="footer">
-                    <div class="footerText">
-                        <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software institute,Nanjing
-                            University and <strong>Shiqi Wang</strong> at the Medical school,Nanjing University. It is
-                            part of a research project. This web tool was trained with patients' data from two Chinese
-                            Grade-IIIA hospitals.</p>
+                        <div id="footer">
+                            <div class="footerText">
+                                <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software
+                                    institute,Nanjing
+                                    University and <strong>Shiqi Wang</strong> at the Medical school,Nanjing University.
+                                    It
+                                    is
+                                    part of a research project. This web tool was trained with patients' data from two
+                                    Chinese
+                                    Grade-IIIA hospitals.</p>
+                            </div>
+                        </div>
+
+                        <div id="footer">
+                            <div class="footerText">
+                                <p style="color:slateblue;justify-content:right">For feedbacks and comments, please
+                                    contact:
+                                    wangshiqi@smail.nju.edu.cn.</p>
+                            </div>
+                        </div>
                     </div>
-
-
-                </div>
-
-                <div id="footer">
-                    <div class="footerText">
-                        <p style="color:slateblue;justify-content:right">For feedbacks and comments, please contact:
-                            wangshiqi@smail.nju.edu.cn.</p>
-                    </div>
-
                 </div>
             </div>
         </form>
