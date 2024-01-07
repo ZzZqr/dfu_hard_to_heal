@@ -10,7 +10,7 @@
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/imageonline-co-pngtoicoimage.ico' %}"/>
     <title>
-        Prediction of hard to heal
+        Prediction of DFU hard-to-heal
     </title>
     <!-- Bootstrap core CSS -->
     <link href="/src/CSS/bootstrap.css" rel="stylesheet"/>
@@ -552,12 +552,14 @@
                                                             document.getElementById("input1BloodGlucose").value = "1";
                                                             errorTextBloodGlucose.innerText = "";
                                                         } else if (inputValue <= 0) {
+                                                            document.getElementById("input1BloodGlucose").value = null;
                                                             errorTextBloodGlucose.innerText = "Please enter a positive value";
                                                         } else {
                                                             document.getElementById("input1BloodGlucose").value = "0";
                                                             errorTextBloodGlucose.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
+                                                        document.getElementById("input1BloodGlucose").value = null;
                                                         errorTextBloodGlucose.innerText = "Please enter a valid number";
                                                     }
                                                 }
@@ -633,12 +635,14 @@
                                                             document.getElementById("input1Albumin").value = "2";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
                                                         } else if (inputValue <= 0) {
+                                                            document.getElementById("input1Albumin").value = null;
                                                             errorTextAlbumin.innerText = "Please enter a positive value";
                                                         } else {
                                                             document.getElementById("input1Albumin").value = "0";
                                                             errorTextAlbumin.innerText = "The number is too large, please check if there are any errors";
                                                         }
                                                     } else {
+                                                        document.getElementById("input1Albumin").value = null;
                                                         errorTextAlbumin.innerText = "Please enter a valid number";
                                                     }
                                                 }
@@ -700,9 +704,11 @@
                                                             document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
+                                                            document.getElementById("input1CRP").value = null;
                                                             document.getElementById("errorTextCRP").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
+                                                        document.getElementById("input1CRP").value = null;
                                                         errorTextCRP.innerText = "Please enter a valid number";
                                                     }
                                                 }
@@ -775,9 +781,11 @@
                                                             document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
+                                                            document.getElementById("input1WoundArea").value = null;
                                                             document.getElementById("errorTextWoundArea").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
+                                                        document.getElementById("input1WoundArea").value = null;
                                                         errorTextWoundArea.innerText = "Please enter a valid number";
                                                     }
                                                 }
@@ -848,10 +856,12 @@
                                                             document.getElementById("input1Creatinine").value = "0";
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else {
+                                                            document.getElementById("input1Creatinine").value = null;
                                                             // 其余数据为错误数据
                                                             document.getElementById("errorTextCreatinine").innerText = "Please enter a positive value";
                                                         }
                                                     } else {
+                                                        document.getElementById("input1Creatinine").value = null;
                                                         errorTextCreatinine.innerText = "Please enter a valid number";
                                                     }
                                                 }

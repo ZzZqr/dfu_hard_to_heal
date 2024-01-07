@@ -10,7 +10,7 @@
     {% load static %}
     <link rel="shortcut icon" href="{% static 'images/imageonline-co-pngtoicoimage.ico' %}"/>
     <title>
-        Prediction of hard to heal
+        难愈性糖尿病足溃疡预测
     </title>
     <!-- Bootstrap core CSS -->
     <link href="/src/CSS/bootstrap.css" rel="stylesheet"/>
@@ -247,8 +247,8 @@
                     window.location.href = "index.html";
                 }
             </script>
-            <h3 class="text-muted" style="padding-right: 25%;padding-top: 15px">
-                <span id="lblTitle">Prediction of DFU hard-to-heal</span></h3>
+            <h3 class="text-muted" style="padding-right: 35%;padding-top: 15px">
+                <span id="lblTitle">难愈性糖尿病足溃疡预测</span></h3>
         </div>
     </div>
     <div class="container" id="fullpage">
@@ -492,7 +492,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1BloodGlucose" class="fieldname"
-                                                  style="padding-left: 5px">Random Blood Glucose(mmol/L)</span>
+                                                  style="padding-left: 5px">随机血糖(mmol/L)</span>
                                             <div class="btn-group" role="group" aria-label="BloodGlucose">
                                                 <input name="input1BloodGlucoseDummy" type="text" value=""
                                                        id="input1BloodGlucoseDummy"
@@ -552,13 +552,15 @@
                                                             document.getElementById("input1BloodGlucose").value = "1";
                                                             errorTextBloodGlucose.innerText = "";
                                                         } else if (inputValue <= 0) {
-                                                            errorTextBloodGlucose.innerText = "Please enter a positive value";
+                                                            document.getElementById("input1BloodGlucose").value = null;
+                                                            errorTextBloodGlucose.innerText = "请输入一个正数";
                                                         } else {
                                                             document.getElementById("input1BloodGlucose").value = "0";
-                                                            errorTextBloodGlucose.innerText = "The number is too large, please check if there are any errors";
+                                                            errorTextBloodGlucose.innerText = "数字过大，请检查是否有错误";
                                                         }
                                                     } else {
-                                                        errorTextBloodGlucose.innerText = "Please enter a valid number";
+                                                        document.getElementById("input1BloodGlucose").value = null;
+                                                        errorTextBloodGlucose.innerText = "请输入一个数字";
                                                     }
                                                 }
                                             </script>
@@ -568,7 +570,7 @@
 
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1Albumin" class="fieldname"
-                                                  style="padding-left: 5px">Albumin(g/L)</span>
+                                                  style="padding-left: 5px">白蛋白(g/L)</span>
                                             <div class="btn-group" role="group" aria-label="Albumin">
                                                 {#                                                <label for="input2">#}
                                                 <input name="input1AlbuminDummy" type="text" value=""
@@ -633,13 +635,15 @@
                                                             document.getElementById("input1Albumin").value = "2";
                                                             document.getElementById("errorTextAlbumin").innerText = ""; // 清空错误信息
                                                         } else if (inputValue <= 0) {
-                                                            errorTextAlbumin.innerText = "Please enter a positive value";
+                                                            document.getElementById("input1Albumin").value = null;
+                                                            errorTextAlbumin.innerText = "请输入一个正数";
                                                         } else {
                                                             document.getElementById("input1Albumin").value = "0";
-                                                            errorTextAlbumin.innerText = "The number is too large, please check if there are any errors";
+                                                            errorTextAlbumin.innerText = "数字过大，请检查是否有错误";
                                                         }
                                                     } else {
-                                                        errorTextAlbumin.innerText = "Please enter a valid number";
+                                                        document.getElementById("input1Albumin").value = null;
+                                                        errorTextAlbumin.innerText = "请输入一个数字";
                                                     }
                                                 }
                                             </script>
@@ -647,7 +651,7 @@
 
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1CRP" class="fieldname"
-                                                  style="padding-left: 5px">C-Reactive Protein (CRP)(mg/L)</span>
+                                                  style="padding-left: 5px">C反应蛋白(mg/L)</span>
                                             <div class="btn-group" role="group" aria-label="CRP">
                                                 <input name="input1CRPDummy" type="text" value=""
                                                        id="input1CRPDummy"
@@ -700,10 +704,12 @@
                                                             document.getElementById("errorTextCRP").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCRP").innerText = "Please enter a positive value";
+                                                            document.getElementById("input1CRP").value = null;
+                                                            document.getElementById("errorTextCRP").innerText = "请输入一个正数";
                                                         }
                                                     } else {
-                                                        errorTextCRP.innerText = "Please enter a valid number";
+                                                        document.getElementById("input1CRP").value = null;
+                                                        errorTextCRP.innerText = "请输入一个数字";
                                                     }
                                                 }
 
@@ -716,7 +722,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1WoundArea" class="fieldname"
-                                                  style="padding-left: 5px">Wound Area(cm<sup>2</sup>)</span>
+                                                  style="padding-left: 5px">伤口面积(cm<sup>2</sup>)</span>
                                             <div class="btn-group" role="group" aria-label="WoundArea">
                                                 <input name="input1WoundAreaDummy" type="text" value=""
                                                        id="input1WoundAreaDummy"
@@ -775,10 +781,12 @@
                                                             document.getElementById("errorTextWoundArea").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextWoundArea").innerText = "Please enter a positive value";
+                                                            document.getElementById("input1WoundArea").value = null;
+                                                            document.getElementById("errorTextWoundArea").innerText = "请输入一个正数";
                                                         }
                                                     } else {
-                                                        errorTextWoundArea.innerText = "Please enter a valid number";
+                                                        document.getElementById("input1WoundArea").value = null;
+                                                        errorTextWoundArea.innerText = "请输入一个数字";
                                                     }
                                                 }
 
@@ -787,7 +795,7 @@
 
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1Creatinine" class="fieldname"
-                                                  style="padding-left: 5px">Creatinine(μmol/L)</span>
+                                                  style="padding-left: 5px">血肌酐(μmol/L)</span>
                                             <div class="btn-group" role="group" aria-label="Creatinine">
                                                 <input name="input1CreatinineDummy" type="text" value=""
                                                        id="input1CreatinineDummy"
@@ -849,10 +857,12 @@
                                                             document.getElementById("errorTextCreatinine").innerText = ""; // 清空错误信息
                                                         } else {
                                                             // 其余数据为错误数据
-                                                            document.getElementById("errorTextCreatinine").innerText = "Please enter a positive value";
+                                                            document.getElementById("input1Creatinine").value = null;
+                                                            document.getElementById("errorTextCreatinine").innerText = "请输入一个正数";
                                                         }
                                                     } else {
-                                                        errorTextCreatinine.innerText = "Please enter a valid number";
+                                                        document.getElementById("input1Creatinine").value = null;
+                                                        errorTextCreatinine.innerText = "请输入一个数字";
                                                     }
                                                 }
 
@@ -875,7 +885,7 @@
                            class="btn btn-primary btnSubmit" action="">
 
                     <div id="valueError" style="display: none">
-                        <p style="float: right; color: red;">Null value exists!</p>
+                        <p style="float: right; color: red;">尚有数值未填写</p>
                     </div>
                 </div>
                 <script>
@@ -960,27 +970,27 @@
                                     popTitle.style.backgroundColor = "red";
                                     popBtn.style.backgroundColor = "red";
                                     popMain.style.borderColor = "red"
-                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very High Risk\nPredict Probability: " + result.probability;
+                                    popInfo.innerText = "糖尿病足溃疡难愈预测为: 极高风险\n预测概率: " + result.probability;
                                 } else if (result.probability >= 0.6) {
                                     popTitle.style.backgroundColor = "#FF4500";
                                     popBtn.style.backgroundColor = "#FF4500";
                                     popMain.style.borderColor = "#FF4500"
-                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: High Risk\nPredict Probability: " + result.probability;
+                                    popInfo.innerText = "糖尿病足溃疡难愈预测为: 高风险\n预测概率: " + result.probability;
                                 } else if (result.probability > 0.3) {
                                     popTitle.style.backgroundColor = "#FFD700";
                                     popBtn.style.backgroundColor = "#FFD700";
                                     popMain.style.borderColor = "#FFD700";
-                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Medium Risk\nPredict Probability: " + result.probability;
+                                    popInfo.innerText = "糖尿病足溃疡难愈预测为: 中风险\n预测概率: " + result.probability;
                                 } else if (result.probability > 0.1) {
                                     popTitle.style.backgroundColor = "#7FFF00";
                                     popBtn.style.backgroundColor = "#7FFF00";
                                     popMain.style.borderColor = "#7FFF00"
-                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Low Risk\nPredict Probability: " + result.probability;
+                                    popInfo.innerText = "糖尿病足溃疡难愈预测为: 低风险\n预测概率: " + result.probability;
                                 } else {
                                     popTitle.style.backgroundColor = "green";
                                     popBtn.style.backgroundColor = "green";
                                     popMain.style.borderColor = "green";
-                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very Low Risk\nPredict Probability: " + result.probability;
+                                    popInfo.innerText = "糖尿病足溃疡难愈预测为: 极低风险\n预测概率: " + result.probability;
                                 }
 
                                 // 控制两个div的显示与隐藏
@@ -1033,7 +1043,7 @@
                         </div>
                         <div id="footer" style="padding: 20px">
                             <div class="footerText">
-                                <p>该工具由南京大学软件研究所的<strong>xxx</strong>和南京大学医学院的<strong>xxx</strong>开发。这是一个研究项目的一部分。该网络工具使用来自中国两家三甲医院的患者数据进行训练。
+                                <p>该工具由南京大学软件学院的<strong>郑启睿</strong>和南京大学医学院的<strong>王诗琪</strong>开发。这是一个研究项目的一部分。该网络工具使用来自中国两家三甲医院的患者数据进行训练。
                                 </p>
                             </div>
                         </div>
