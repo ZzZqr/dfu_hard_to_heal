@@ -487,8 +487,8 @@
                             <div class="col-lg-12">
                                 <h3>DFU Data</h3>
                                 <div class="dfuData">
-                                    <p style="text-align:center;color: #0078D7">You can press enter to switch between
-                                        the inputs.</p>
+                                    <p style="text-align:center;color: #0078D7">按下回车键以跳转至下一个输入框
+                                    </p>
                                     <div class="col-lg-6">
                                         <div class="form-group" style="position: relative;">
                                             <span id="lblinput1BloodGlucose" class="fieldname"
@@ -871,7 +871,7 @@
                     <div class="loader-container" id="loaderContainer" style="display: none;">
                         <div class="loader"></div>
                     </div>
-                    <input name="btnSubmit" value="Predict" id="btnSubmit"
+                    <input name="btnSubmit" value="预测" id="btnSubmit"
                            class="btn btn-primary btnSubmit" action="">
 
                     <div id="valueError" style="display: none">
@@ -955,10 +955,32 @@
                                 var popTitle = document.getElementById('popTitle');
                                 var popMain = document.getElementById('popupMain');
                                 var popBtn = document.getElementById("popBtn");
-                                if (result.probability > 0.5) {
+                                var popInfo = document.getElementById("popInfo");
+                                if (result.probability >= 0.9) {
                                     popTitle.style.backgroundColor = "red";
                                     popBtn.style.backgroundColor = "red";
                                     popMain.style.borderColor = "red"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very High Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability >= 0.6) {
+                                    popTitle.style.backgroundColor = "#FF4500";
+                                    popBtn.style.backgroundColor = "#FF4500";
+                                    popMain.style.borderColor = "#FF4500"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: High Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability > 0.3) {
+                                    popTitle.style.backgroundColor = "#FFD700";
+                                    popBtn.style.backgroundColor = "#FFD700";
+                                    popMain.style.borderColor = "#FFD700";
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Medium Risk\nPredict Probability: " + result.probability;
+                                } else if (result.probability > 0.1) {
+                                    popTitle.style.backgroundColor = "#7FFF00";
+                                    popBtn.style.backgroundColor = "#7FFF00";
+                                    popMain.style.borderColor = "#7FFF00"
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Low Risk\nPredict Probability: " + result.probability;
+                                } else {
+                                    popTitle.style.backgroundColor = "green";
+                                    popBtn.style.backgroundColor = "green";
+                                    popMain.style.borderColor = "green";
+                                    popInfo.innerText = "Predictive Hard-to-heal DFU Diagnose: Very Low Risk\nPredict Probability: " + result.probability;
                                 }
 
                                 // 控制两个div的显示与隐藏
@@ -974,105 +996,51 @@
                 </script>
                 <div class="popupbox" id="popupbox">
                     <div class="main" id="popupMain">
-                        <div class="title" id="popTitle">{{ "RESULT" }}</div>
+                        <div class="title" id="popTitle">{{ "结果" }}</div>
                         <div class="content">
                             <div class="info"
-                                 id="popInfo">{{ "Predictive Hard-to-heal DFU diagnose is: High Risk" }}</div>
+                                 id="popInfo">{{ "" }}</div>
                         </div>
                         <div class="btn">
-                            <button id="popBtn">确定</button>
+                            <button id="popBtn">确认</button>
                         </div>
                     </div>
                 </div>
 
                 <script>
-
                     function closePop() {
                         // 获取弹出窗口元素
                         let popDiv = document.getElementById("popDiv");
 
                         popDiv.style.display = "none";
                     }
-
-                    export default {
-                        props: {
-                            title: {
-                                type: String,
-                                default: "提示",
-                            },
-                            alertInfo: {
-                                type: String,
-                                default: "提示内容",
-                            },
-                        },
-                    };
                 </script>
 
-                <div id="divResult">
-                    <p class="titleresult">Result</p>
-                    <table class="table table-hover table-bordered">
-                        <tr class="info">
-                            <th>Label</th>
-                            <th>Value</th>
-                            <th>Probability</th>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="background-color: azure">output1</td>
-                        </tr>
-                        <tr>
-                            <td class="textresult">Predictive Hard-to-heal DFU Value is: Results Interpretation: [0]
-                                Means Low Risk of Hard-to-heal DFU . [1] Means High Risk of Hard-to-heal DFU
-                            </td>
-                            <td id="label" style="word-break: break-all;"></td>
-                            <td id="probability" style="word-break: break-all;"></td>
-                        </tr>
-                    </table>
-                    <div id="topLoader"></div>
-                </div>
-
-                <div>
+                <div style="padding-top: 10%">
                     <div style="text-align: center">
-                        <p>Click <span class="underline" onclick="toggleContent()"
-                                       onmouseover="changeCursor(this)"
-                                       onmouseout="restoreCursor()"
-                                       style="text-decoration: underline;color: #0a53be;">here</span> to see detailed
-                            disclaimer</p>
+                        <p>点击 <span class="underline" onclick="toggleContent()"
+                                    onmouseover="changeCursor(this)"
+                                    onmouseout="restoreCursor()"
+                                    style="text-decoration: underline;color: #0a53be;">这里</span> 查看免责声明</p>
                     </div>
 
                     <div id="hiddenDetails" style="overflow: hidden;height:0px;transition: height 0.2s;">
-                        <div id="footer">
+                        <div id="footer" style="padding-left: 20px;padding-right: 20px">
                             <div class="footerText">
-                                <p style="color:green;justify-content:right">Disclaimer: <strong>This website is
-                                    intended to
-                                    be
-                                    used for research purpose only. Authors can not guarantee the accuracy of the
-                                    calculation
-                                    for any particular patient. Any decision about diabetic foot ulcers treatment should
-                                    be
-                                    made
-                                    solely in consultation with a licensed specialist.
+                                <p style="color:slateblue;justify-content:right">免责声明：<strong>本网站仅用于研究目的。作者不能保证任何特定患者的计算准确性。任何关于糖尿病足溃疡治疗的决定都应该完全咨询有执照的专家。
                                 </strong></p>
                             </div>
                         </div>
-
-
-                        <div id="footer">
+                        <div id="footer" style="padding: 20px">
                             <div class="footerText">
-                                <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software
-                                    institute,Nanjing
-                                    University and <strong>Shiqi Wang</strong> at the Medical school,Nanjing University.
-                                    It
-                                    is
-                                    part of a research project. This web tool was trained with patients' data from two
-                                    Chinese
-                                    Grade-IIIA hospitals.</p>
+                                <p>该工具由南京大学软件研究所的<strong>xxx</strong>和南京大学医学院的<strong>xxx</strong>开发。这是一个研究项目的一部分。该网络工具使用来自中国两家三甲医院的患者数据进行训练。
+                                </p>
                             </div>
                         </div>
 
-                        <div id="footer">
+                        <div id="footer" style="padding: 20px">
                             <div class="footerText">
-                                <p style="color:slateblue;justify-content:right">For feedbacks and comments, please
-                                    contact:
+                                <p style="color:green;justify-content:right">联系方式：
                                     wangshiqi@smail.nju.edu.cn.</p>
                             </div>
                         </div>

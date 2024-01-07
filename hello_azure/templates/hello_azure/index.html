@@ -1002,13 +1002,12 @@
                                  id="popInfo">{{ "" }}</div>
                         </div>
                         <div class="btn">
-                            <button id="popBtn">确定</button>
+                            <button id="popBtn">confirm</button>
                         </div>
                     </div>
                 </div>
 
                 <script>
-
                     function closePop() {
                         // 获取弹出窗口元素
                         let popDiv = document.getElementById("popDiv");
@@ -1017,22 +1016,7 @@
                     }
                 </script>
 
-                <div id="footer" style="padding: 20px; padding-top: 50px">
-                    <div class="footerText">
-                        <p style="color:slateblue;justify-content:right">Disclaimer: <strong>This website is
-                            intended to
-                            be
-                            used for research purpose only. Authors can not guarantee the accuracy of the
-                            calculation
-                            for any particular patient. Any decision about diabetic foot ulcers treatment should
-                            be
-                            made
-                            solely in consultation with a licensed specialist.
-                        </strong></p>
-                    </div>
-                </div>
-
-                <div>
+                <div style="padding-top: 10%">
                     <div style="text-align: center">
                         <p>Click <span class="underline" onclick="toggleContent()"
                                        onmouseover="changeCursor(this)"
@@ -1042,6 +1026,20 @@
                     </div>
 
                     <div id="hiddenDetails" style="overflow: hidden;height:0px;transition: height 0.2s;">
+                        <div id="footer" style="padding-left: 20px;padding-right: 20px">
+                            <div class="footerText">
+                                <p style="color:slateblue;justify-content:right">Disclaimer: <strong>This website is
+                                    intended to
+                                    be
+                                    used for research purpose only. Authors can not guarantee the accuracy of the
+                                    calculation
+                                    for any particular patient. Any decision about diabetic foot ulcers treatment should
+                                    be
+                                    made
+                                    solely in consultation with a licensed specialist.
+                                </strong></p>
+                            </div>
+                        </div>
                         <div id="footer" style="padding: 20px">
                             <div class="footerText">
                                 <p>The tool has been developed by <strong>Qirui Zheng</strong> at the Software
